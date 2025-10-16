@@ -1,8 +1,7 @@
 package com.promni.folium.data
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.graphics.Color
 import folium.composeapp.generated.resources.Res
+import folium.composeapp.generated.resources.preview_project_mft
 import folium.composeapp.generated.resources.test
 
 val projects = listOf(
@@ -21,7 +20,7 @@ val projects = listOf(
         platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop),
         shortDescription = "Fitness app",
         titleTextColor = null,
-        backgroundImage = Res.drawable.test,
+        backgroundImage = Res.drawable.preview_project_mft,
         containerColor = null
     ),
     ProjectItemData(

@@ -2,23 +2,24 @@
 
 package com.promni.folium.presentation.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
@@ -43,9 +44,9 @@ fun CarouselItem(
     modifier: Modifier = Modifier
 ) {
     val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onSecondaryContainer
-    OutlinedCard(
+    Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.secondaryContainer)
+        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.secondaryContainer),
     ) {
         Column {
             Image(
@@ -113,10 +114,20 @@ fun ProjectsCarousel(
     HorizontalMultiBrowseCarousel(
         state = state,
         modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 24.dp),
         itemSpacing = 16.dp,
         preferredItemWidth = preferredItemWidth,
     ) { i ->
-        CarouselItem(item = items[i], modifier = Modifier.height(preferredItemHeight))
+        CarouselItem(
+            item = items[i],
+            modifier = Modifier
+                .height(preferredItemHeight)
+                .maskBorder(
+                    border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primary),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .maskClip(shape = RoundedCornerShape(16.dp))
+        )
     }
 }
 

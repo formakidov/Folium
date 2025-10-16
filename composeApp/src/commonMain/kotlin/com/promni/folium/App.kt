@@ -1,8 +1,12 @@
 package com.promni.folium
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.promni.folium.data.projects
 import com.promni.folium.presentation.ui.components.ProjectsCarousel
 import com.promni.folium.presentation.ui.theme.AppTheme
@@ -17,11 +21,13 @@ fun App(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor
     ) {
-        Surface {
-            AboutMe()
-            Projects()
-            Skills()
-            Contact()
+        Surface(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.safeDrawingPadding()) {
+                AboutMe()
+                Projects()
+                Skills()
+                Contact()
+            }
         }
     }
 }
