@@ -43,12 +43,13 @@ fun CarouselItem(
     item: ProjectItemData,
     modifier: Modifier = Modifier
 ) {
-    val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onSecondaryContainer
+    val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onSurfaceVariant
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.secondaryContainer),
+        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.surfaceContainer),
     ) {
         Column {
+            // todo load image with Coil
             Image(
                 painter = painterResource(item.backgroundImage),
                 contentDescription = item.title,
@@ -58,16 +59,18 @@ fun CarouselItem(
             Column(modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp)) {
                 Text(
                     text = item.title,
+                    style = MaterialTheme.typography.titleLarge,
                     color = textColor,
                 )
                 Text(
                     text = item.shortDescription,
+                    style = MaterialTheme.typography.titleMedium,
                     color = textColor.copy(alpha = 0.8f),
                 )
                 FlowRow(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalArrangement = Arrangement.spacedBy(-10.dp)
+                    verticalArrangement = Arrangement.spacedBy((-10).dp)
                 ) {
                     item.platforms.forEach { platform ->
                         AssistChip(
@@ -81,7 +84,9 @@ fun CarouselItem(
                                 )
                             },
                             colors = AssistChipDefaults.assistChipColors(
-                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                labelColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                                leadingIconContentColor = MaterialTheme.colorScheme.onTertiaryContainer
                             )
                         )
                     }
@@ -123,7 +128,7 @@ fun ProjectsCarousel(
             modifier = Modifier
                 .height(preferredItemHeight)
                 .maskBorder(
-                    border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primary),
+                    border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(16.dp)
                 )
                 .maskClip(shape = RoundedCornerShape(16.dp))

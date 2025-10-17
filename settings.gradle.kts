@@ -1,4 +1,4 @@
-rootProject.name = "Folium"
+rootProject.name = "Portare_Folium"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

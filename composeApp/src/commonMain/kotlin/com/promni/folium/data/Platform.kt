@@ -1,10 +1,10 @@
 package com.promni.folium.data
 
-import folium.composeapp.generated.resources.Res
-import folium.composeapp.generated.resources.chip_icon_android
-import folium.composeapp.generated.resources.chip_icon_desktop
-import folium.composeapp.generated.resources.chip_icon_ios
-import folium.composeapp.generated.resources.chip_icon_web
+import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.chip_icon_android
+import portare_folium.composeapp.generated.resources.chip_icon_desktop
+import portare_folium.composeapp.generated.resources.chip_icon_ios
+import portare_folium.composeapp.generated.resources.chip_icon_web
 import org.jetbrains.compose.resources.DrawableResource
 
 enum class Platform(val displayName: String, val icon: DrawableResource) {

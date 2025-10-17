@@ -1,8 +1,8 @@
 package com.promni.folium.data
 
-import folium.composeapp.generated.resources.Res
-import folium.composeapp.generated.resources.preview_project_mft
-import folium.composeapp.generated.resources.test
+import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.preview_project_mft
+import portare_folium.composeapp.generated.resources.test
 
 val projects = listOf(
     ProjectItemData(
@@ -34,7 +34,7 @@ val projects = listOf(
     ),
     ProjectItemData(
         id = "4",
-        title = "Folium (you are here)",
+        title = "Portare Folium (you are here)",
         platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop, Platform.Web),
         shortDescription = "Portfolio app",
         titleTextColor = null,
