@@ -2,12 +2,11 @@ package com.promni.folium.data
 
 import portare_folium.composeapp.generated.resources.Res
 import portare_folium.composeapp.generated.resources.preview_project_mft
-import portare_folium.composeapp.generated.resources.test
 
 val projects = listOf(
     ProjectItemData(
         id = "1",
-        title = "Portare Folium (you are here)",
+        title = "Portare Folium",
         platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop, Platform.Web),
         shortDescription = "Portfolio app",
         titleTextColor = null,
