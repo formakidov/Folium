@@ -1,9 +1,7 @@
 package com.promni.folium.presentation.ui.screen
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -14,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +19,11 @@ import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
+import org.jetbrains.compose.resources.stringResource
+import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.back
+import portare_folium.composeapp.generated.resources.project_not_found
+import portare_folium.composeapp.generated.resources.sorry_we_couldnt_find_that_project
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,13 +36,12 @@ fun ProjectDetailScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                // todo get title value from strings, not project object
-                title = { Text(project?.title ?: "Project Not Found") },
+                title = { Text(project?.title ?: stringResource( Res.string.project_not_found)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource( Res.string.back)
                         )
                     }
                 }
@@ -61,16 +62,7 @@ fun ProjectDetailScreen(
 private fun Content(
     project: ProjectItemData
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = "Details for ${project.title}",
-            style = MaterialTheme.typography.bodyLarge,
-        )
-    }
+    // todo add content
 }
 
 @Composable
@@ -80,7 +72,7 @@ private fun ProjectNotFound(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "Sorry, we couldn't find that project.",
+            text = stringResource( Res.string.sorry_we_couldnt_find_that_project),
             style = MaterialTheme.typography.bodyLarge,
         )
     }

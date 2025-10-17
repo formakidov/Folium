@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -23,7 +24,6 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
@@ -55,9 +56,22 @@ import com.promni.folium.data.projects
 import com.promni.folium.presentation.ui.components.ProjectsCarousel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.and_this_is_my
+import portare_folium.composeapp.generated.resources.email
+import portare_folium.composeapp.generated.resources.email_to
+import portare_folium.composeapp.generated.resources.etymology
+import portare_folium.composeapp.generated.resources.etymology_tooltip
 import portare_folium.composeapp.generated.resources.github_logo
+import portare_folium.composeapp.generated.resources.hey_my_name_is
 import portare_folium.composeapp.generated.resources.linkedin_logo
+import portare_folium.composeapp.generated.resources.my_github_profile
+import portare_folium.composeapp.generated.resources.my_linkedin_profile
+import portare_folium.composeapp.generated.resources.portare_folium
+import portare_folium.composeapp.generated.resources.short_bio
+import portare_folium.composeapp.generated.resources.what_ive_been_building
+import portare_folium.composeapp.generated.resources.yauheni_farmakidau
 
 
 @Composable
@@ -72,11 +86,13 @@ fun MainScreen(onProjectClick: (String) -> Unit) {
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
-            Header(modifier = Modifier.padding(
-                top = systemBarsPaddings.calculateTopPadding(),
-                start = startPadding,
-                end = endPadding,
-            ))
+            Header(
+                modifier = Modifier.padding(
+                    top = systemBarsPaddings.calculateTopPadding(),
+                    start = startPadding,
+                    end = endPadding,
+                )
+            )
 
             Content(
                 modifier = Modifier.padding(
@@ -87,12 +103,14 @@ fun MainScreen(onProjectClick: (String) -> Unit) {
                 onProjectClick = onProjectClick
             )
 
-            Footer(modifier = Modifier.padding(
-                top = 32.dp,
-                start = startPadding,
-                end = endPadding,
-                bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp
-            ))
+            Footer(
+                modifier = Modifier.padding(
+                    top = 32.dp,
+                    start = startPadding,
+                    end = endPadding,
+                    bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp
+                )
+            )
         }
     }
 }
@@ -124,7 +142,7 @@ private fun Title(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(end = 8.dp),
-            text = "Hey, my name is",
+            text = stringResource(Res.string.hey_my_name_is),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -136,7 +154,7 @@ private fun Title(modifier: Modifier = Modifier) {
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(8.dp),
-            text = "Yauheni Farmakidau",
+            text = stringResource( Res.string.yauheni_farmakidau),
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
         )
@@ -148,7 +166,7 @@ private fun Title(modifier: Modifier = Modifier) {
 private fun Subtitle() {
     FlowRow(verticalArrangement = Arrangement.Center) {
         Text(
-            text = "...and this is my ",
+            text = stringResource( Res.string.and_this_is_my),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -166,7 +184,7 @@ private fun Subtitle() {
                 ) {
                     Text(
                         modifier = Modifier.padding(8.dp),
-                        text = "From Latin 'portare' (to carry) and 'folium' (leaf/sheet), evolving to mean 'a collection of work'.",
+                        text = stringResource( Res.string.etymology_tooltip),
                         color = MaterialTheme.colorScheme.onTertiaryContainer
                     )
                 }
@@ -192,14 +210,14 @@ private fun Subtitle() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Portare Folium",
+                    text = stringResource( Res.string.portare_folium),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.tertiary,
                 )
                 Icon(
                     modifier = Modifier.padding(start = 4.dp),
                     imageVector = Icons.Outlined.Info,
-                    contentDescription = "Etymology",
+                    contentDescription = stringResource( Res.string.etymology),
                     tint = MaterialTheme.colorScheme.tertiary
                 )
             }
@@ -215,7 +233,7 @@ private fun ShortBio() {
     ) {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = "I'm a Software Engineer who loves a good game of squash or table tennis, building useful (and colorful) mobile apps, and geeking out over HoMM3!",
+            text = stringResource( Res.string.short_bio),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary
         )
@@ -250,7 +268,7 @@ private fun Projects(onProjectClick: (String) -> Unit) {
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 12.dp),
-            text = "// What I've been building",
+            text = stringResource( Res.string.what_ive_been_building),
             style = MaterialTheme.typography.titleMedium,
             fontFamily = FontFamily.Monospace,
             color = Color(0xFF808080)
@@ -335,13 +353,14 @@ private fun Socials() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
+                modifier = Modifier.size(24.dp),
                 painter = painterResource(Res.drawable.github_logo),
-                contentDescription = "GitHub logo",
+                contentDescription = stringResource( Res.string.github_logo),
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = "My GitHub Profile",
+                text = stringResource( Res.string.my_github_profile),
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -358,13 +377,14 @@ private fun Socials() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
+                modifier = Modifier.size(24.dp),
                 painter = painterResource(Res.drawable.linkedin_logo),
-                contentDescription = "LinkedIn logo",
+                contentDescription = stringResource( Res.string.linkedin_logo),
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = "My LinkedIn Profile",
+                text = stringResource( Res.string.my_linkedin_profile),
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -373,52 +393,54 @@ private fun Socials() {
 
 @Composable
 private fun Contact(modifier: Modifier = Modifier) {
-    val uriHandler = LocalUriHandler.current
     FlowRow(
         modifier = modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .selectable(
-                    selected = false,
-                    role = Role.Button,
-                    onClick = { uriHandler.openUri("https://github.com/formakidov") }
-                )
-                .padding(vertical = 4.dp, horizontal = 8.dp),
+        SocialIconButton(
+            url = "https://github.com/formakidov",
             painter = painterResource(Res.drawable.github_logo),
-            contentDescription = "GitHub logo",
-            tint = MaterialTheme.colorScheme.secondary
+            contentDescription = stringResource(Res.string.github_logo)
         )
+
         Spacer(modifier = Modifier.width(8.dp))
-        Icon(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .selectable(
-                    selected = false,
-                    role = Role.Button,
-                    onClick = { uriHandler.openUri("https://www.linkedin.com/in/yauheni-farmakidau/") }
-                )
-                .padding(vertical = 4.dp, horizontal = 8.dp),
+
+        SocialIconButton(
+            url = "https://www.linkedin.com/in/yauheni-farmakidau/",
             painter = painterResource(Res.drawable.linkedin_logo),
-            contentDescription = "LinkedIn logo",
-            tint = MaterialTheme.colorScheme.secondary
+            contentDescription = stringResource(Res.string.linkedin_logo)
         )
+
         Spacer(modifier = Modifier.width(8.dp))
-        Icon(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .selectable(
-                    selected = false,
-                    role = Role.Button,
-                    onClick = { uriHandler.openUri("mailto:yau.farmakidau@gmail.com") }
-                )
-                .padding(vertical = 4.dp, horizontal = 8.dp),
-            imageVector = Icons.Outlined.Email,
-            contentDescription = "Email",
-            tint = MaterialTheme.colorScheme.secondary
+
+        SocialIconButton(
+            url = "mailto:yau.farmakidau@gmail.com",
+            painter = painterResource(Res.drawable.email_to),
+            contentDescription = stringResource(Res.string.email)
         )
     }
+}
+
+@Composable
+private fun SocialIconButton(
+    url: String,
+    painter: Painter,
+    contentDescription: String
+) {
+    val uriHandler = LocalUriHandler.current
+    Icon(
+        modifier = Modifier
+            .size(48.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .selectable(
+                selected = false,
+                role = Role.Button,
+                onClick = { uriHandler.openUri(url) }
+            )
+            .padding(vertical = 4.dp, horizontal = 8.dp),
+        painter = painter,
+        contentDescription = contentDescription,
+        tint = MaterialTheme.colorScheme.secondary
+    )
 }

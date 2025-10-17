@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Portare Folium</string>
+    <string name="hey_my_name_is">Hey, my name is</string>
+    <string name="yauheni_farmakidau">Yauheni Farmakidau</string>
+    <string name="and_this_is_my">...and this is my</string>
+    <string name="portare_folium">Portare Folium</string>
+    <string name="etymology_tooltip">From Latin 'portare' (to carry) and 'folium' (leaf/sheet), evolving to mean 'a collection of work'.</string>
+    <string name="etymology">Etymology</string>
+    <string name="short_bio">I'm a Software Engineer who loves a good game of squash or table tennis, building useful (and colorful) mobile apps, and geeking out over HoMM3!</string>
+    <string name="what_ive_been_building">// What I've been building</string>
+    <string name="my_github_profile">My GitHub Profile</string>
+    <string name="my_linkedin_profile">My LinkedIn Profile</string>
+    <string name="github_logo">GitHub logo</string>
+    <string name="linkedin_logo">LinkedIn logo</string>
+    <string name="email">Email</string>
+    <string name="project_not_found">Project Not Found</string>
+    <string name="back">Back</string>
+    <string name="sorry_we_couldnt_find_that_project">Sorry, we couldn't find that project.</string>
+</resources>
