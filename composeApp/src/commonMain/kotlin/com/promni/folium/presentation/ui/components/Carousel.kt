@@ -2,7 +2,6 @@
 
 package com.promni.folium.presentation.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
@@ -37,26 +35,61 @@ import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import org.jetbrains.compose.resources.painterResource
 
+@Composable
+fun ProjectsCarousel(
+    modifier: Modifier = Modifier,
+    items: List<ProjectItemData>
+) {
+    val state = rememberCarouselState { items.count() }
+    val windowSizeClass = getWindowSizeClass()
+    val preferredItemWidth = when (windowSizeClass.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> 320.dp
+        WindowWidthSizeClass.Medium -> 384.dp
+        WindowWidthSizeClass.Expanded -> 512.dp
+        else -> 320.dp
+    }
+    val preferredItemHeight = when (windowSizeClass.heightSizeClass) {
+        WindowHeightSizeClass.Compact -> 240.dp
+        WindowHeightSizeClass.Medium -> 288.dp
+        WindowHeightSizeClass.Expanded -> 384.dp
+        else -> 240.dp
+    }
+
+    HorizontalMultiBrowseCarousel(
+        state = state,
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 24.dp),
+        itemSpacing = 16.dp,
+        preferredItemWidth = preferredItemWidth,
+    ) { i ->
+        CarouselItem(
+            item = items[i],
+            modifier = Modifier
+                .height(preferredItemHeight)
+                .maskClip(MaterialTheme.shapes.large)
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarouselItem(
     item: ProjectItemData,
     modifier: Modifier = Modifier
 ) {
-    val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onPrimaryContainer
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.surfaceContainer),
+        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.primaryContainer),
     ) {
         Column {
-            // todo load image with Coil
             Image(
                 painter = painterResource(item.backgroundImage),
                 contentDescription = item.title,
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            Column(modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp)) {
+            Column(modifier = Modifier.padding(start = 24.dp, end = 8.dp, bottom = 16.dp, top = 16.dp)) {
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleLarge,
@@ -93,46 +126,6 @@ fun CarouselItem(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ProjectsCarousel(
-    modifier: Modifier = Modifier,
-    items: List<ProjectItemData>
-) {
-    val state = rememberCarouselState { items.count() }
-    val windowSizeClass = getWindowSizeClass()
-    val preferredItemWidth = when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> 320.dp
-        WindowWidthSizeClass.Medium -> 384.dp
-        WindowWidthSizeClass.Expanded -> 512.dp
-        else -> 320.dp
-    }
-    val preferredItemHeight = when (windowSizeClass.heightSizeClass) {
-        WindowHeightSizeClass.Compact -> 240.dp
-        WindowHeightSizeClass.Medium -> 288.dp
-        WindowHeightSizeClass.Expanded -> 384.dp
-        else -> 240.dp
-    }
-
-    HorizontalMultiBrowseCarousel(
-        state = state,
-        modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 24.dp),
-        itemSpacing = 16.dp,
-        preferredItemWidth = preferredItemWidth,
-    ) { i ->
-        CarouselItem(
-            item = items[i],
-            modifier = Modifier
-                .height(preferredItemHeight)
-                .maskBorder(
-                    border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .maskClip(shape = RoundedCornerShape(16.dp))
-        )
     }
 }
 
