@@ -1,4 +1,4 @@
-package com.promni.folium
+package com.promni.folium.presentation.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

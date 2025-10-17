@@ -5,8 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.promni.folium.MainScreen
-import com.promni.folium.presentation.ui.screens.ProjectDetailScreen
+import com.promni.folium.presentation.ui.screen.MainScreen
+import com.promni.folium.presentation.ui.screen.ProjectDetailScreen
 
 @Composable
 fun AppNavigation() {
