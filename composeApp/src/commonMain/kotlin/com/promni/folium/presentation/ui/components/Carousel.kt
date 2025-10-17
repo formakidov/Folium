@@ -3,6 +3,7 @@
 package com.promni.folium.presentation.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -38,7 +39,8 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun ProjectsCarousel(
     modifier: Modifier = Modifier,
-    items: List<ProjectItemData>
+    items: List<ProjectItemData>,
+    onItemClick: (ProjectItemData) -> Unit = {}
 ) {
     val state = rememberCarouselState { items.count() }
     val windowSizeClass = getWindowSizeClass()
@@ -67,6 +69,7 @@ fun ProjectsCarousel(
             modifier = Modifier
                 .height(preferredItemHeight)
                 .maskClip(MaterialTheme.shapes.large)
+                .clickable { onItemClick(items[i]) }
         )
     }
 }
@@ -129,7 +132,6 @@ fun CarouselItem(
     }
 }
 
-@DevicePreviews
 @Composable
 private fun ThemedCarouselPreview(
     darkTheme: Boolean,
@@ -142,9 +144,11 @@ private fun ThemedCarouselPreview(
 }
 
 @Composable
+@DevicePreviews
 private fun CarouselDarkPreview() =
     ThemedCarouselPreview(darkTheme = true)
 
 @Composable
+@DevicePreviews
 private fun CarouselLightPreview() =
     ThemedCarouselPreview(darkTheme = false)

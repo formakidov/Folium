@@ -2,6 +2,7 @@ package com.promni.folium
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import com.promni.folium.navigation.AppNavigation
 import com.promni.folium.presentation.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -14,7 +15,7 @@ fun App(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor
     ) {
-        MainScreen()
+        AppNavigation()
     }
 }
 

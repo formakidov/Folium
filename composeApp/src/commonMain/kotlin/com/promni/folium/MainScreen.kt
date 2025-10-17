@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -19,8 +18,6 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +34,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults.rememberTooltipPositionProvider
+import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -64,8 +61,7 @@ import portare_folium.composeapp.generated.resources.linkedin_logo
 
 
 @Composable
-fun MainScreen() {
-    // todo add language picker
+fun MainScreen(onProjectClick: (String) -> Unit) {
     val scrollState = rememberScrollState()
     val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
     val safePaddings = WindowInsets.safeDrawing.asPaddingValues()
@@ -82,11 +78,14 @@ fun MainScreen() {
                 end = endPadding,
             ))
 
-            Content(modifier = Modifier.padding(
-                top = 48.dp,
-                start = startPadding,
-                end = endPadding,
-            ))
+            Content(
+                modifier = Modifier.padding(
+                    top = 48.dp,
+                    start = startPadding,
+                    end = endPadding,
+                ),
+                onProjectClick = onProjectClick
+            )
 
             Footer(modifier = Modifier.padding(
                 top = 32.dp,
@@ -98,7 +97,7 @@ fun MainScreen() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Header(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
@@ -156,7 +155,7 @@ private fun Subtitle() {
         val tooltipState = rememberTooltipState(isPersistent = true)
         val scope = rememberCoroutineScope()
         TooltipBox(
-            positionProvider = rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
+            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
             tooltip = {
                 Surface(
                     modifier = Modifier
@@ -224,15 +223,18 @@ private fun ShortBio() {
 }
 
 @Composable
-private fun Content(modifier: Modifier = Modifier) {
+private fun Content(
+    modifier: Modifier = Modifier,
+    onProjectClick: (String) -> Unit
+) {
     Column(modifier) {
-        Projects()
+        Projects(onProjectClick)
         AboutMe()
     }
 }
 
 @Composable
-private fun Projects() {
+private fun Projects(onProjectClick: (String) -> Unit) {
     val valColor = Color(0xFFc47430)
     val myProjectsColor = Color(0xFFb874ad)
     val sortedByDescendingColor = Color(0xFF509be2)
@@ -277,7 +279,11 @@ private fun Projects() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        ProjectsCarousel(items = projects)
+        ProjectsCarousel(
+            items = projects,
+            onItemClick = { onProjectClick(it.id) }
+        )
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
