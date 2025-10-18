@@ -4,6 +4,8 @@ This is my personal portfolio, reimagined as a fully-native Kotlin Multiplatform
 
 The app is built entirely with **Compose Multiplatform** and runs on **Android, iOS, Desktop, and Web**.
 
+[Live Demo (GitHub Pages)](https://formakidov.github.io/Folium)
+
 ## Features
 
 This project serves as a practical demonstration of modern KMP development, incorporating a wide range of best practices and libraries:
