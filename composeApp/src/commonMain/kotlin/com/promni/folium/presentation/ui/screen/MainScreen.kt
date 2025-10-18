@@ -2,6 +2,7 @@ package com.promni.folium.presentation.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -37,6 +39,8 @@ import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,86 +56,104 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import com.promni.folium.data.model.Language
 import com.promni.folium.data.projects
+import com.promni.folium.localization.AppStrings
+import com.promni.folium.localization.ProvideLanguage
+import com.promni.folium.localization.localizedString
+import com.promni.folium.presentation.ui.components.LanguagePicker
 import com.promni.folium.presentation.ui.components.ProjectsCarousel
+import com.promni.folium.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import portare_folium.composeapp.generated.resources.Res
-import portare_folium.composeapp.generated.resources.and_this_is_my
-import portare_folium.composeapp.generated.resources.email
 import portare_folium.composeapp.generated.resources.email_to
-import portare_folium.composeapp.generated.resources.etymology
-import portare_folium.composeapp.generated.resources.etymology_tooltip
 import portare_folium.composeapp.generated.resources.github_logo
-import portare_folium.composeapp.generated.resources.hey_my_name_is
 import portare_folium.composeapp.generated.resources.linkedin_logo
-import portare_folium.composeapp.generated.resources.my_github_profile
-import portare_folium.composeapp.generated.resources.my_linkedin_profile
-import portare_folium.composeapp.generated.resources.portare_folium
-import portare_folium.composeapp.generated.resources.short_bio
-import portare_folium.composeapp.generated.resources.what_ive_been_building
-import portare_folium.composeapp.generated.resources.yauheni_farmakidau
-
 
 @Composable
-fun MainScreen(onProjectClick: (String) -> Unit) {
-    val scrollState = rememberScrollState()
-    val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
-    val safePaddings = WindowInsets.safeDrawing.asPaddingValues()
-    val layoutDirection = LocalLayoutDirection.current
+fun MainScreen(
+    onProjectClick: (String) -> Unit,
+    settingsViewModel: SettingsViewModel = koinViewModel()
+) {
+    val settings by settingsViewModel.settings.collectAsState()
 
-    val startPadding = max(safePaddings.calculateStartPadding(layoutDirection), 24.dp)
-    val endPadding = max(safePaddings.calculateEndPadding(layoutDirection), 24.dp)
+    ProvideLanguage(settings.language) {
+        val scrollState = rememberScrollState()
+        val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
+        val safePaddings = WindowInsets.safeDrawing.asPaddingValues()
+        val layoutDirection = LocalLayoutDirection.current
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.verticalScroll(scrollState)) {
-            Header(
-                modifier = Modifier.padding(
-                    top = systemBarsPaddings.calculateTopPadding(),
-                    start = startPadding,
-                    end = endPadding,
+        val startPadding = max(safePaddings.calculateStartPadding(layoutDirection), 24.dp)
+        val endPadding = max(safePaddings.calculateEndPadding(layoutDirection), 24.dp)
+
+        Surface(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.verticalScroll(scrollState)) {
+                Header(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = systemBarsPaddings.calculateTopPadding(),
+                            start = startPadding,
+                            end = endPadding,
+                        ),
+                    currentLanguage = settings.language,
+                    onLanguageChange = settingsViewModel::setLanguage
                 )
-            )
 
-            Content(
-                modifier = Modifier.padding(
-                    top = 48.dp,
-                    start = startPadding,
-                    end = endPadding,
-                ),
-                onProjectClick = onProjectClick
-            )
-
-            Footer(
-                modifier = Modifier.padding(
-                    top = 32.dp,
-                    start = startPadding,
-                    end = endPadding,
-                    bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp
+                Content(
+                    modifier = Modifier.padding(
+                        top = 48.dp,
+                        start = startPadding,
+                        end = endPadding,
+                    ),
+                    onProjectClick = onProjectClick
                 )
-            )
+
+                Footer(
+                    modifier = Modifier.padding(
+                        top = 32.dp,
+                        start = startPadding,
+                        end = endPadding,
+                        bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp
+                    )
+                )
+            }
         }
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun Header(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
-        Title(modifier = Modifier.padding(top = 24.dp))
+private fun Header(
+    modifier: Modifier = Modifier,
+    currentLanguage: Language,
+    onLanguageChange: (Language) -> Unit
+) {
+    Box(modifier = modifier) {
+        Column {
+            Title(modifier = Modifier.padding(top = 24.dp, end = 80.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Subtitle()
+            Subtitle()
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        ShortBio()
+            ShortBio()
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Socials()
+            Socials()
+        }
+
+        LanguagePicker(
+            modifier = Modifier.align(Alignment.TopEnd).padding(top = 24.dp),
+            languages = Language.entries,
+            currentLanguage = currentLanguage,
+            onLanguageChange = onLanguageChange
+        )
     }
 }
 
@@ -141,20 +163,20 @@ private fun Title(modifier: Modifier = Modifier) {
         Text(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
+                .padding(vertical = 4.dp)
                 .padding(end = 8.dp),
-            text = stringResource(Res.string.hey_my_name_is),
+            text = localizedString(AppStrings.HEY_MY_NAME_IS),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
         Text(
             modifier = Modifier
-                .padding(vertical = 4.dp)
                 .background(
                     color = MaterialTheme.colorScheme.primaryContainer,
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(8.dp),
-            text = stringResource( Res.string.yauheni_farmakidau),
+            text = localizedString(AppStrings.YAUHENI_FARMAKIDAU),
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
         )
@@ -166,7 +188,7 @@ private fun Title(modifier: Modifier = Modifier) {
 private fun Subtitle() {
     FlowRow(verticalArrangement = Arrangement.Center) {
         Text(
-            text = stringResource( Res.string.and_this_is_my),
+            text = localizedString(AppStrings.AND_THIS_IS_MY),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -184,7 +206,7 @@ private fun Subtitle() {
                 ) {
                     Text(
                         modifier = Modifier.padding(8.dp),
-                        text = stringResource( Res.string.etymology_tooltip),
+                        text = localizedString(AppStrings.ETYMOLOGY_TOOLTIP),
                         color = MaterialTheme.colorScheme.onTertiaryContainer
                     )
                 }
@@ -210,14 +232,14 @@ private fun Subtitle() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource( Res.string.portare_folium),
+                    text = localizedString(AppStrings.PORTARE_FOLIUM),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.tertiary,
                 )
                 Icon(
                     modifier = Modifier.padding(start = 4.dp),
                     imageVector = Icons.Outlined.Info,
-                    contentDescription = stringResource( Res.string.etymology),
+                    contentDescription = localizedString(AppStrings.ETYMOLOGY),
                     tint = MaterialTheme.colorScheme.tertiary
                 )
             }
@@ -233,7 +255,7 @@ private fun ShortBio() {
     ) {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = stringResource( Res.string.short_bio),
+            text = localizedString(AppStrings.SHORT_BIO),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary
         )
@@ -268,7 +290,7 @@ private fun Projects(onProjectClick: (String) -> Unit) {
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 12.dp),
-            text = stringResource( Res.string.what_ive_been_building),
+            text = localizedString(AppStrings.WHAT_IVE_BEEN_BUILDING),
             style = MaterialTheme.typography.titleMedium,
             fontFamily = FontFamily.Monospace,
             color = Color(0xFF808080)
@@ -355,12 +377,12 @@ private fun Socials() {
             Icon(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(Res.drawable.github_logo),
-                contentDescription = stringResource( Res.string.github_logo),
+                contentDescription = localizedString(AppStrings.GITHUB_LOGO),
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = stringResource( Res.string.my_github_profile),
+                text = localizedString(AppStrings.MY_GITHUB_PROFILE),
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -379,12 +401,12 @@ private fun Socials() {
             Icon(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(Res.drawable.linkedin_logo),
-                contentDescription = stringResource( Res.string.linkedin_logo),
+                contentDescription = localizedString(AppStrings.LINKEDIN_LOGO),
                 tint = MaterialTheme.colorScheme.primary
             )
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = stringResource( Res.string.my_linkedin_profile),
+                text = localizedString(AppStrings.MY_LINKEDIN_PROFILE),
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -401,7 +423,7 @@ private fun Contact(modifier: Modifier = Modifier) {
         SocialIconButton(
             url = "https://github.com/formakidov",
             painter = painterResource(Res.drawable.github_logo),
-            contentDescription = stringResource(Res.string.github_logo)
+            contentDescription = localizedString(AppStrings.GITHUB_LOGO)
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -409,7 +431,7 @@ private fun Contact(modifier: Modifier = Modifier) {
         SocialIconButton(
             url = "https://www.linkedin.com/in/yauheni-farmakidau/",
             painter = painterResource(Res.drawable.linkedin_logo),
-            contentDescription = stringResource(Res.string.linkedin_logo)
+            contentDescription = localizedString(AppStrings.LINKEDIN_LOGO)
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -417,7 +439,7 @@ private fun Contact(modifier: Modifier = Modifier) {
         SocialIconButton(
             url = "mailto:yau.farmakidau@gmail.com",
             painter = painterResource(Res.drawable.email_to),
-            contentDescription = stringResource(Res.string.email)
+            contentDescription = localizedString(AppStrings.EMAIL)
         )
     }
 }

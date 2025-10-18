@@ -17,13 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
+import com.promni.folium.localization.AppStrings
+import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
-import org.jetbrains.compose.resources.stringResource
-import portare_folium.composeapp.generated.resources.Res
-import portare_folium.composeapp.generated.resources.back
-import portare_folium.composeapp.generated.resources.project_not_found
-import portare_folium.composeapp.generated.resources.sorry_we_couldnt_find_that_project
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,12 +33,12 @@ fun ProjectDetailScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(project?.title ?: stringResource( Res.string.project_not_found)) },
+                title = { Text(project?.title ?: localizedString(AppStrings.PROJECT_NOT_FOUND)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource( Res.string.back)
+                            contentDescription = localizedString(AppStrings.BACK)
                         )
                     }
                 }
@@ -72,7 +69,7 @@ private fun ProjectNotFound(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = stringResource( Res.string.sorry_we_couldnt_find_that_project),
+            text = localizedString(AppStrings.SORRY_PROJECT_NOT_FOUND),
             style = MaterialTheme.typography.bodyLarge,
         )
     }

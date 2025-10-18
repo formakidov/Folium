@@ -18,6 +18,5 @@ val enStrings = mapOf(
     AppStrings.PROJECT_NOT_FOUND to "Project Not Found",
     AppStrings.BACK to "Back",
     AppStrings.SORRY_PROJECT_NOT_FOUND to "Sorry, we couldn't find that project.",
-    AppStrings.CHANGE_LANGUAGE to "Change Language",
     AppStrings.EMAIL_TO to "Email To"
 )

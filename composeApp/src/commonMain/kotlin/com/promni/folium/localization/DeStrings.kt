@@ -18,6 +18,5 @@ val deStrings = mapOf(
     AppStrings.PROJECT_NOT_FOUND to "Projekt nicht gefunden",
     AppStrings.BACK to "Zurück",
     AppStrings.SORRY_PROJECT_NOT_FOUND to "Entschuldigung, wir konnten dieses Projekt nicht finden.",
-    AppStrings.CHANGE_LANGUAGE to "Sprache ändern",
     AppStrings.EMAIL_TO to "Email an"
 )

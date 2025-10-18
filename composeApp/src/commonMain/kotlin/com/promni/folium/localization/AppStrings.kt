@@ -18,6 +18,5 @@ object AppStrings {
     const val PROJECT_NOT_FOUND = "project_not_found"
     const val BACK = "back"
     const val SORRY_PROJECT_NOT_FOUND = "sorry_we_couldnt_find_that_project"
-    const val CHANGE_LANGUAGE = "change_language"
     const val EMAIL_TO = "email_to"
 }
