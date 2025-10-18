@@ -1,76 +1,53 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
+# Portare Folium - KMP Portfolio
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+This is my personal portfolio, reimagined as a fully-native Kotlin Multiplatform application. It's designed to showcase my projects and skills in a modern, responsive, and cross-platform way.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+The app is built entirely with **Compose Multiplatform** and runs on **Android, iOS, Desktop, and Web**.
 
-### Build and Run Android Application
+## Features
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+This project serves as a practical demonstration of modern KMP development, incorporating a wide range of best practices and libraries:
 
-### Build and Run Desktop (JVM) Application
+* **100% Kotlin Multiplatform:** A single shared codebase for all business logic and UI.
+* **Highly Responsive UI:** A single, adaptable UI built with Compose that looks great on any screen size, from a phone to a desktop monitor. (Go ahead, try to break the UI!)
+* **Material 3 Design:** Implements the latest Material Design 3 principles, components, and icons.
+* **Custom Theming:** Uses a full custom color palette generated with the [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/) for a unique, consistent look.
+* **Custom Internationalization (i18n):** Features a custom-built, type-safe solution for app localization.
+* **Multiplatform Data Persistence:** Uses **KStore** for simple, type-safe key-value storage, persisting user preferences (like the selected language) across all platforms.
+* **Custom Composable Components:** Features a variety of custom-built UI elements to create a unique user experience..
+* **Modern Architecture:** Built with a clean MVVM architecture using **Jetpack/Compose ViewModel** for state management.
+* **Dependency Injection:** Uses **Koin** for dependency injection across all shared source sets (common, android, jvm, etc.).
+* **Type-Safe Navigation:** Leverages **Jetpack/Compose Navigation** for screen transitions.
+* **Fast Development Cycle:** Integrates the **Compose Hot Reload** plugin for near-instant UI updates during development.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+## Tech Stack & Libraries
 
-### Build and Run Web Application
+This project uses a modern, multiplatform-first tech stack:
 
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
-- for the Wasm target (faster, modern browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-    ```
-- for the JS target (slower, supports older browsers):
-  - on macOS/Linux
-    ```shell
-    ./gradlew :composeApp:jsBrowserDevelopmentRun
-    ```
-  - on Windows
-    ```shell
-    .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
-    ```
+* **Core:**
+    * [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html)
+    * [Kotlinx Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+    * [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)
+* **UI (commonMain):**
+    * [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform)
+    * [Compose Material 3](https://developer.android.com/jetpack/compose/design-systems/material3)
+    * [Compose Material Icons Extended](https://developer.android.com/jetpack/compose/icons#icons-extended)
+* **Architecture & State (commonMain):**
+    * [Jetpack/Compose ViewModel](https://developer.android.com/jetpack/androidx/releases/lifecycle)
+    * [Jetpack Navigation for Compose](https://developer.android.com/jetpack/compose/navigation)
+    * [Material 3 Window Size Class](https://developer.android.com/reference/kotlin/androidx/compose/material3/windowsizeclass/package-summary)
+* **Dependency Injection (commonMain):**
+    * [Koin (Core, Compose, ViewModel)](https://insert-koin.io/)
+* **Data & Storage:**
+    * [KStore](https://github.com/xxfast/KStore) (commonMain)
+    * `KStore-file` (Android, iOS, JVM)
+    * `KStore-storage` (Web)
+* **Utilities:**
+    * [Multiplatform-Paths](https://github.com/jClapL/multiplatform-paths) (for KStore file access)
 
-### Build and Run iOS Application
+## Supported Platforms
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
-
----
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
-
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+* **Android** (Min SDK 26)
+* **iOS** (arm64 & simulator)
+* **Desktop (JVM)** (Windows, macOS, Linux)
+* **Web** (JS & WasmJS)
