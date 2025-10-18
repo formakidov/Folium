@@ -94,7 +94,9 @@ private fun LanguageItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier
+                .clip(RoundedCornerShape(4.dp))
+                .size(24.dp),
             painter = painterResource(language.icon),
             contentDescription = language.displayName,
             tint = Color.Unspecified
