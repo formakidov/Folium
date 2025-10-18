@@ -45,6 +45,9 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.kstore.file)
+            implementation(libs.multiplatform.paths)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -58,6 +61,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.material3.windowsizeclass)
             implementation(libs.navigation.compose)
+            implementation(libs.kstore)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -65,6 +72,15 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.kstore.file)
+            implementation(libs.multiplatform.paths)
+        }
+        iosMain.dependencies {
+            implementation(libs.kstore.file)
+            implementation(libs.multiplatform.paths)
+        }
+        webMain.dependencies {
+            implementation(libs.kstore.storage)
         }
     }
 }
