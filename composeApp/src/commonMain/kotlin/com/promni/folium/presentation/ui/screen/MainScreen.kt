@@ -1,5 +1,7 @@
 package com.promni.folium.presentation.ui.screen
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,13 +12,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
@@ -36,8 +35,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.TooltipDefaults.rememberTooltipPositionProvider
 import androidx.compose.material3.rememberTooltipState
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,15 +47,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import com.promni.folium.data.model.Language
 import com.promni.folium.data.projects
 import com.promni.folium.localization.AppStrings
@@ -63,14 +63,18 @@ import com.promni.folium.localization.ProvideLanguage
 import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.components.LanguagePicker
 import com.promni.folium.presentation.ui.components.ProjectsCarousel
+import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import com.promni.folium.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.dzwigaj_background
 import portare_folium.composeapp.generated.resources.email_to
 import portare_folium.composeapp.generated.resources.github_logo
 import portare_folium.composeapp.generated.resources.linkedin_logo
+import portare_folium.composeapp.generated.resources.photo
 
 @Composable
 fun MainScreen(
@@ -78,26 +82,16 @@ fun MainScreen(
     settingsViewModel: SettingsViewModel = koinViewModel()
 ) {
     val settings by settingsViewModel.settings.collectAsState()
+    val scrollState = rememberScrollState()
+    val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
+    val sidePadding = getContentSidePadding()
 
     ProvideLanguage(settings.language) {
-        val scrollState = rememberScrollState()
-        val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
-        val safePaddings = WindowInsets.safeDrawing.asPaddingValues()
-        val layoutDirection = LocalLayoutDirection.current
-
-        val startPadding = max(safePaddings.calculateStartPadding(layoutDirection), 24.dp)
-        val endPadding = max(safePaddings.calculateEndPadding(layoutDirection), 24.dp)
-
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.verticalScroll(scrollState)) {
                 Header(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = systemBarsPaddings.calculateTopPadding(),
-                            start = startPadding,
-                            end = endPadding,
-                        ),
+                        .fillMaxWidth(),
                     currentLanguage = settings.language,
                     onLanguageChange = settingsViewModel::setLanguage
                 )
@@ -105,8 +99,8 @@ fun MainScreen(
                 Content(
                     modifier = Modifier.padding(
                         top = 48.dp,
-                        start = startPadding,
-                        end = endPadding,
+                        start = sidePadding,
+                        end = sidePadding,
                     ),
                     onProjectClick = onProjectClick
                 )
@@ -114,8 +108,8 @@ fun MainScreen(
                 Footer(
                     modifier = Modifier.padding(
                         top = 32.dp,
-                        start = startPadding,
-                        end = endPadding,
+                        start = sidePadding,
+                        end = sidePadding,
                         bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp
                     )
                 )
@@ -131,25 +125,71 @@ private fun Header(
     currentLanguage: Language,
     onLanguageChange: (Language) -> Unit
 ) {
+    val statusBarPadding = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
+    val sidePadding = getContentSidePadding()
+
     Box(modifier = modifier) {
-        Column {
-            Title(modifier = Modifier.padding(top = 24.dp, end = 80.dp))
 
-            Spacer(modifier = Modifier.height(8.dp))
+        val backgroundHeight = 192.dp
+        BackgroundImage(
+            modifier = Modifier
+                .height(backgroundHeight)
+                .fillMaxWidth()
+        )
 
-            Subtitle()
+        Column(modifier = Modifier
+            .padding(
+                top = statusBarPadding,
+                start = sidePadding,
+                end = sidePadding,
+            )
+        ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
+            val halfPhotoHeight = 48.dp
 
-            ShortBio()
+            FlowRow(
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(top = backgroundHeight - halfPhotoHeight - statusBarPadding),
+                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Bottom),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                itemVerticalAlignment = Alignment.Bottom
+            ) {
+                Photo(modifier = Modifier.size(halfPhotoHeight * 2))
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Subtitle()
+            }
 
-            Socials()
+            FlowRow(
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(top = 24.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Column {
+                    Title()
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    Socials()
+                }
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Bio(
+                    modifier = Modifier
+                        .weight(1f, fill = false)
+                        .widthIn(min = 384.dp, max = 640.dp)
+                )
+            }
         }
 
         LanguagePicker(
-            modifier = Modifier.align(Alignment.TopEnd).padding(top = 24.dp),
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 24.dp + statusBarPadding, end = 24.dp),
             languages = Language.entries,
             currentLanguage = currentLanguage,
             onLanguageChange = onLanguageChange
@@ -158,12 +198,106 @@ private fun Header(
 }
 
 @Composable
+private fun BackgroundImage(modifier: Modifier = Modifier) {
+    Box(modifier, contentAlignment = Alignment.BottomEnd) {
+        Image(
+            painter = painterResource(Res.drawable.dzwigaj_background),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+
+        BackgroundImageAuthorNote(
+            modifier = Modifier
+                .padding(end = 4.dp, bottom = 4.dp)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun BackgroundImageAuthorNote(modifier: Modifier) {
+    val tooltipState = rememberTooltipState(isPersistent = true)
+    val scope = rememberCoroutineScope()
+    TooltipBox(
+        modifier = modifier,
+        positionProvider = rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
+        tooltip = {
+            TooltipContent(text = localizedString(AppStrings.AUTHOR_DZWIGAJ))
+        },
+        state = tooltipState
+    ) {
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .selectable(
+                    selected = false,
+                    role = Role.Button,
+                    onClick = {
+                        scope.launch {
+                            if (tooltipState.isVisible) {
+                                tooltipState.dismiss()
+                            } else {
+                                tooltipState.show()
+                            }
+                        }
+                    }
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Cz. Dzwigaj",
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.Black,
+            )
+            Icon(
+                modifier = Modifier.padding(start = 4.dp).size(16.dp),
+                imageVector = Icons.Outlined.Info,
+                contentDescription = null,
+                tint = Color.Black
+            )
+        }
+    }
+}
+
+@Composable
+private fun TooltipContent(modifier: Modifier = Modifier, text: String) {
+    Surface(
+        modifier = modifier
+            .widthIn(max = 512.dp),
+        shape = RoundedCornerShape(8.dp),
+        color = MaterialTheme.colorScheme.tertiaryContainer
+    ) {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            text = text,
+            color = MaterialTheme.colorScheme.onTertiaryContainer
+        )
+    }
+}
+
+@Composable
+private fun Photo(modifier: Modifier) {
+    Image(
+        painter = painterResource(Res.drawable.photo),
+        contentDescription = localizedString(AppStrings.YAUHENI_FARMAKIDAU),
+        modifier = modifier
+            .size(128.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.primaryContainer),
+        contentScale = ContentScale.Crop
+    )
+}
+
+@Composable
 private fun Title(modifier: Modifier = Modifier) {
-    FlowRow(modifier = modifier, verticalArrangement = Arrangement.Center) {
+    FlowRow(
+        modifier = modifier
+            .animateContentSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         Text(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(vertical = 4.dp)
                 .padding(end = 8.dp),
             text = localizedString(AppStrings.HEY_MY_NAME_IS),
             style = MaterialTheme.typography.headlineSmall,
@@ -185,73 +319,57 @@ private fun Title(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun Subtitle() {
-    FlowRow(verticalArrangement = Arrangement.Center) {
-        Text(
-            text = localizedString(AppStrings.AND_THIS_IS_MY),
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        val tooltipState = rememberTooltipState(isPersistent = true)
-        val scope = rememberCoroutineScope()
-        TooltipBox(
-            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
-            tooltip = {
-                Surface(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .widthIn(max = 512.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    color = MaterialTheme.colorScheme.tertiaryContainer
-                ) {
-                    Text(
-                        modifier = Modifier.padding(8.dp),
-                        text = localizedString(AppStrings.ETYMOLOGY_TOOLTIP),
-                        color = MaterialTheme.colorScheme.onTertiaryContainer
-                    )
-                }
-            },
-            state = tooltipState
-        ) {
-            Row(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .selectable(
-                        selected = false,
-                        role = Role.Button,
-                        onClick = {
-                            scope.launch {
-                                if (tooltipState.isVisible) {
-                                    tooltipState.dismiss()
-                                } else {
-                                    tooltipState.show()
-                                }
+private fun Subtitle(modifier: Modifier = Modifier) {
+    val tooltipState = rememberTooltipState(isPersistent = true)
+    val scope = rememberCoroutineScope()
+    TooltipBox(
+        modifier = modifier,
+        positionProvider = rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
+        tooltip = {
+            TooltipContent(text = localizedString(AppStrings.ETYMOLOGY_TOOLTIP))
+        },
+        state = tooltipState
+    ) {
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .selectable(
+                    selected = false,
+                    role = Role.Button,
+                    onClick = {
+                        scope.launch {
+                            if (tooltipState.isVisible) {
+                                tooltipState.dismiss()
+                            } else {
+                                tooltipState.show()
                             }
                         }
-                    ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = localizedString(AppStrings.PORTARE_FOLIUM),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.tertiary,
-                )
-                Icon(
-                    modifier = Modifier.padding(start = 4.dp),
-                    imageVector = Icons.Outlined.Info,
-                    contentDescription = localizedString(AppStrings.ETYMOLOGY),
-                    tint = MaterialTheme.colorScheme.tertiary
-                )
-            }
+                    }
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = localizedString(AppStrings.PORTARE_FOLIUM),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.tertiary,
+            )
+            Icon(
+                modifier = Modifier.padding(start = 4.dp),
+                imageVector = Icons.Outlined.Info,
+                contentDescription = localizedString(AppStrings.ETYMOLOGY),
+                tint = MaterialTheme.colorScheme.tertiary
+            )
         }
     }
 }
 
 @Composable
-private fun ShortBio() {
+private fun Bio(modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+        modifier = modifier
+            .animateContentSize(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+        shape = RoundedCornerShape(16.dp),
     ) {
         Text(
             modifier = Modifier.padding(16.dp),
@@ -267,21 +385,21 @@ private fun Content(
     modifier: Modifier = Modifier,
     onProjectClick: (String) -> Unit
 ) {
-    Column(modifier) {
-        Projects(onProjectClick)
-        AboutMe()
-    }
+    Projects(modifier, onProjectClick)
 }
 
 @Composable
-private fun Projects(onProjectClick: (String) -> Unit) {
+private fun Projects(
+    modifier: Modifier = Modifier,
+    onProjectClick: (String) -> Unit
+) {
     val valColor = Color(0xFFc47430)
     val myProjectsColor = Color(0xFFb874ad)
     val sortedByDescendingColor = Color(0xFF509be2)
     val projectColor = Color(0xFF76a88c)
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.surfaceContainer,
                 shape = RoundedCornerShape(16.dp)
@@ -324,7 +442,6 @@ private fun Projects(onProjectClick: (String) -> Unit) {
             onItemClick = { onProjectClick(it.id) }
         )
 
-
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -355,61 +472,62 @@ private fun Footer(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun AboutMe() {
-//    TODO("Not yet implemented") A short, friendly expansion of your bio
+private fun Socials() {
+    val uriHandler = LocalUriHandler.current
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        SocialsExtendedButton(
+            onClick = { uriHandler.openUri("https://github.com/formakidov") },
+            iconRes = Res.drawable.github_logo,
+            iconContentDescription = localizedString(AppStrings.GITHUB_LOGO),
+            text = localizedString(AppStrings.MY_GITHUB_PROFILE)
+        )
+        SocialsExtendedButton(
+            onClick = { uriHandler.openUri("https://www.linkedin.com/in/yauheni-farmakidau/") },
+            iconRes = Res.drawable.linkedin_logo,
+            iconContentDescription = localizedString(AppStrings.LINKEDIN_LOGO),
+            text = localizedString(AppStrings.MY_LINKEDIN_PROFILE)
+        )
+        SocialsExtendedButton(
+            onClick = { uriHandler.openUri("mailto:yau.farmakidau@gmail.com") },
+            iconRes = Res.drawable.email_to,
+            iconContentDescription = localizedString(AppStrings.EMAIL_TO),
+            text = "yau.farmakidau@gmail.com"
+        )
+    }
 }
 
 @Composable
-private fun Socials() {
-    val uriHandler = LocalUriHandler.current
-    FlowRow(verticalArrangement = Arrangement.Center) {
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .selectable(
-                    selected = false,
-                    role = Role.Button,
-                    onClick = { uriHandler.openUri("https://github.com/formakidov") }
-                )
-                .padding(vertical = 4.dp, horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(Res.drawable.github_logo),
-                contentDescription = localizedString(AppStrings.GITHUB_LOGO),
-                tint = MaterialTheme.colorScheme.primary
+private fun SocialsExtendedButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    iconRes: DrawableResource,
+    iconContentDescription: String? = null,
+    text: String
+) {
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .selectable(
+                selected = false,
+                role = Role.Button,
+                onClick = onClick
             )
-            Text(
-                modifier = Modifier.padding(start = 12.dp),
-                text = localizedString(AppStrings.MY_GITHUB_PROFILE),
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        Row(
-            modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .selectable(
-                    selected = false,
-                    role = Role.Button,
-                    onClick = { uriHandler.openUri("https://www.linkedin.com/in/yauheni-farmakidau/") }
-                )
-                .padding(vertical = 4.dp, horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(Res.drawable.linkedin_logo),
-                contentDescription = localizedString(AppStrings.LINKEDIN_LOGO),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                modifier = Modifier.padding(start = 12.dp),
-                text = localizedString(AppStrings.MY_LINKEDIN_PROFILE),
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
+            .padding(vertical = 4.dp, horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            modifier = Modifier.size(24.dp),
+            painter = painterResource(iconRes),
+            contentDescription = iconContentDescription,
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Text(
+            modifier = Modifier.padding(start = 12.dp),
+            text = text,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -465,4 +583,16 @@ private fun SocialIconButton(
         contentDescription = contentDescription,
         tint = MaterialTheme.colorScheme.secondary
     )
+}
+
+@Composable
+private fun getContentSidePadding(): Dp {
+    val windowSizeClass = getWindowSizeClass()
+    val sidePadding = when (windowSizeClass.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> 24.dp
+        WindowWidthSizeClass.Medium -> 48.dp
+        WindowWidthSizeClass.Expanded -> 96.dp
+        else -> 24.dp
+    }
+    return sidePadding
 }

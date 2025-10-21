@@ -8,7 +8,8 @@ data class ProjectItemData(
     val title: String,
     val platforms: List<Platform>,
     val shortDescription: String,
+    val role: String,
     val titleTextColor: Color? = null,
-    val backgroundImage: DrawableResource,
-    val containerColor: Color? = null,
+    val imageRes: DrawableResource? = null,
+    val containerColor: Color? = null
 )
