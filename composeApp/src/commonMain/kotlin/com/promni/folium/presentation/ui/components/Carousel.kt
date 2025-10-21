@@ -3,15 +3,20 @@
 package com.promni.folium.presentation.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
@@ -35,6 +40,8 @@ import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import org.jetbrains.compose.resources.painterResource
+import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.wip
 
 @Composable
 fun ProjectsCarousel(
@@ -80,33 +87,44 @@ fun CarouselItem(
     item: ProjectItemData,
     modifier: Modifier = Modifier
 ) {
-    val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onPrimaryContainer
+    val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onSurface
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.primaryContainer),
+        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.surfaceContainerHighest),
     ) {
         Column {
             Image(
-                painter = painterResource(item.backgroundImage),
+                painter = painterResource(item.imageRes ?: Res.drawable.wip),
                 contentDescription = item.title,
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            Column(modifier = Modifier.padding(start = 24.dp, end = 8.dp, bottom = 16.dp, top = 16.dp)) {
+            Column(modifier = Modifier.padding(top = 12.dp, end = 8.dp, bottom = 0.dp)) {
                 Text(
+                    modifier = Modifier
+                        .padding(start = 24.dp),
                     text = item.title,
                     style = MaterialTheme.typography.titleLarge,
                     color = textColor,
                 )
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = item.shortDescription,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = textColor.copy(alpha = 0.8f),
+                    modifier = Modifier
+                        .padding(start = 24.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    text = item.role,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
-                FlowRow(
-                    modifier = Modifier,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalArrangement = Arrangement.spacedBy((-10).dp)
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(rememberScrollState())
+                        .padding(start = 24.dp, end = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     item.platforms.forEach { platform ->
                         AssistChip(
@@ -116,14 +134,14 @@ fun CarouselItem(
                                 Icon(
                                     painter = painterResource(platform.icon),
                                     contentDescription = "${platform.displayName} icon",
-                                    Modifier.size(AssistChipDefaults.IconSize)
+                                    modifier = Modifier.size(AssistChipDefaults.IconSize)
                                 )
                             },
                             colors = AssistChipDefaults.assistChipColors(
                                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                                 labelColor = MaterialTheme.colorScheme.onTertiaryContainer,
                                 leadingIconContentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                            )
+                            ),
                         )
                     }
                 }

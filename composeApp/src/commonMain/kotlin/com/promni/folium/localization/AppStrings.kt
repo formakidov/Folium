@@ -19,4 +19,6 @@ object AppStrings {
     const val BACK = "back"
     const val SORRY_PROJECT_NOT_FOUND = "sorry_we_couldnt_find_that_project"
     const val EMAIL_TO = "email_to"
+    const val PHOTO = "photo"
+    const val AUTHOR_DZWIGAJ = "author_dzwigaj"
 }

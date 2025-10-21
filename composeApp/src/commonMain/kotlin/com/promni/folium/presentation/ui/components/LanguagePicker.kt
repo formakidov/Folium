@@ -43,7 +43,7 @@ fun LanguagePicker(
 
     Column(modifier = modifier
         .clip(RoundedCornerShape(12.dp))
-        .background(color = MaterialTheme.colorScheme.surfaceVariant)
+        .background(color = MaterialTheme.colorScheme.surface)
         .border(
             width = 2.dp,
             color = MaterialTheme.colorScheme.secondaryFixedDim,
@@ -61,7 +61,7 @@ fun LanguagePicker(
             exit = shrinkVertically() + fadeOut()
         ) {
             Surface(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.surfaceVariant,
             ) {
                 Column {
                     languages.filter { it != currentLanguage }.forEach { language ->
