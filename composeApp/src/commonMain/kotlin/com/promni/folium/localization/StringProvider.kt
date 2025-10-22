@@ -16,7 +16,7 @@ fun ProvideLanguage(language: Language, content: @Composable () -> Unit) {
 }
 
 @Composable
-fun localizedString(key: String): String {
+fun localizedString(key: AppStringsId): String {
     val language = LocalLanguage.current
     return strings[language]?.get(key) ?: key
 }

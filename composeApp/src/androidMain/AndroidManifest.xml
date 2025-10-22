@@ -11,7 +11,7 @@
         android:theme="@style/Theme.App.Splash">
         <activity
             android:exported="true"
-            android:theme="@style/Theme.App.Splash"
+            android:theme="@style/Theme.App"
             android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

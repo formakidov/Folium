@@ -21,4 +21,8 @@ val enStrings = mapOf(
     AppStrings.EMAIL_TO to "Email to",
     AppStrings.PHOTO to "Photo",
     AppStrings.AUTHOR_DZWIGAJ to "Czesław Dźwigaj is a Polish artist, sculptor, and professor.",
+    AppStrings.OWNER_AND_DEVELOPER to "Owner & Developer",
+    AppStrings.JUNIOR_ANDROID_DEVELOPER to "Junior Android Developer",
+    AppStrings.MIDDLE_ANDROID_DEVELOPER to "Middle Android Developer",
+    AppStrings.LEAD_SENIOR_ANDROID_DEVELOPER to "Lead/Senior Android Developer",
 )

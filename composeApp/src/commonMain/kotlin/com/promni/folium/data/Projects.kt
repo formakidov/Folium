@@ -1,5 +1,6 @@
 package com.promni.folium.data
 
+import com.promni.folium.localization.AppStrings
 import portare_folium.composeapp.generated.resources.Res
 import portare_folium.composeapp.generated.resources.preview_project_mft
 
@@ -12,7 +13,7 @@ val projects = listOf(
         titleTextColor = null,
         imageRes = null,
         containerColor = null,
-        role = "Owner & Developer"
+        role = AppStrings.OWNER_AND_DEVELOPER
     ),
     ProjectItemData(
         id = "mft",
@@ -22,7 +23,7 @@ val projects = listOf(
         titleTextColor = null,
         imageRes = Res.drawable.preview_project_mft,
         containerColor = null,
-        role = "Owner & Developer",
+        role = AppStrings.OWNER_AND_DEVELOPER,
     ),
     ProjectItemData(
         id = "covi",
@@ -32,7 +33,7 @@ val projects = listOf(
         titleTextColor = null,
         imageRes = null,
         containerColor = null,
-        role = "Lead / Senior Android Developer"
+        role = AppStrings.LEAD_SENIOR_ANDROID_DEVELOPER,
     ),
     ProjectItemData(
         id = "tarot",
@@ -42,6 +43,46 @@ val projects = listOf(
         titleTextColor = null,
         imageRes = null,
         containerColor = null,
-        role = "Owner & Developer",
+        role = AppStrings.OWNER_AND_DEVELOPER,
+    ),
+    ProjectItemData(
+        id = "bevrage",
+        title = "bevRAGE",
+        platforms = listOf(Platform.Android),
+        shortDescription = "Cashback app",
+        titleTextColor = null,
+        imageRes = null,
+        containerColor = null,
+        role = AppStrings.MIDDLE_ANDROID_DEVELOPER,
+    ),
+    ProjectItemData(
+        id = "gymboom",
+        title = "GymBoom",
+        platforms = listOf(Platform.Android),
+        shortDescription = "Fitness app",
+        titleTextColor = null,
+        imageRes = null,
+        containerColor = null,
+        role = AppStrings.MIDDLE_ANDROID_DEVELOPER,
+    ),
+    ProjectItemData(
+        id = "ipdigital",
+        title = "IpDigital",
+        platforms = listOf(Platform.Android),
+        shortDescription = "Remote control app",
+        titleTextColor = null,
+        imageRes = null,
+        containerColor = null,
+        role = AppStrings.JUNIOR_ANDROID_DEVELOPER,
+    ),
+    ProjectItemData(
+        id = "litepdf",
+        title = "Lite PDF Reader",
+        platforms = listOf(Platform.Android),
+        shortDescription = "PDF reader app",
+        titleTextColor = null,
+        imageRes = null,
+        containerColor = null,
+        role = AppStrings.JUNIOR_ANDROID_DEVELOPER,
     ),
 )

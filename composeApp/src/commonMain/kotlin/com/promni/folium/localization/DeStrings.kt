@@ -21,4 +21,8 @@ val deStrings = mapOf(
     AppStrings.EMAIL_TO to "Email an",
     AppStrings.PHOTO to "Photo",
     AppStrings.AUTHOR_DZWIGAJ to "Czesław Dźwigaj ist ein polnischer Künstler, Bildhauer und Professor.",
+    AppStrings.OWNER_AND_DEVELOPER to "Besitzer & Entwickler",
+    AppStrings.JUNIOR_ANDROID_DEVELOPER to "Junior Android Entwickler",
+    AppStrings.MIDDLE_ANDROID_DEVELOPER to "Middle Android Entwickler",
+    AppStrings.LEAD_SENIOR_ANDROID_DEVELOPER to "Lead/Senior Android Entwickler",
 )
