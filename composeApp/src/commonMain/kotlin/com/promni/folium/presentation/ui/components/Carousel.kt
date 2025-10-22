@@ -36,6 +36,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
+import com.promni.folium.localization.AppStrings
+import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getWindowSizeClass
@@ -116,7 +118,7 @@ fun CarouselItem(
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(horizontal = 12.dp, vertical = 4.dp),
-                    text = item.role,
+                    text = localizedString(item.role),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                 )

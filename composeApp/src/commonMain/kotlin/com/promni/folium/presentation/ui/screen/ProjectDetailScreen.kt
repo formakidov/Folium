@@ -1,7 +1,10 @@
 package com.promni.folium.presentation.ui.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,12 +18,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontVariation.width
+import androidx.compose.ui.unit.dp
 import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
 import com.promni.folium.localization.AppStrings
 import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
+import org.jetbrains.compose.resources.painterResource
+import portare_folium.composeapp.generated.resources.Res
+import portare_folium.composeapp.generated.resources.wip
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,6 +68,18 @@ fun ProjectDetailScreen(
 private fun Content(
     project: ProjectItemData
 ) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier
+                .size(width = 600.dp, height = 400.dp),
+            painter = painterResource(Res.drawable.wip),
+            contentDescription = null
+        )
+    }
+
     // todo add content
 }
 

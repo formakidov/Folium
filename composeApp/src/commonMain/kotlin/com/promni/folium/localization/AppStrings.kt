@@ -1,5 +1,7 @@
 package com.promni.folium.localization
 
+typealias AppStringsId = String
+
 object AppStrings {
     const val APP_NAME = "app_name"
     const val HEY_MY_NAME_IS = "hey_my_name_is"
@@ -21,4 +23,8 @@ object AppStrings {
     const val EMAIL_TO = "email_to"
     const val PHOTO = "photo"
     const val AUTHOR_DZWIGAJ = "author_dzwigaj"
+    const val OWNER_AND_DEVELOPER = "owner_and_developer"
+    const val LEAD_SENIOR_ANDROID_DEVELOPER = "lead_senior_android_developer"
+    const val MIDDLE_ANDROID_DEVELOPER = "middle_android_developer"
+    const val JUNIOR_ANDROID_DEVELOPER = "junior_android_developer"
 }
