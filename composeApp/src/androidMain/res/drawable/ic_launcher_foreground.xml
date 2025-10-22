@@ -13,12 +13,6 @@
           android:pathData="M0,0h451.32v451.32h-451.32z" />
 
       <path
-          android:fillAlpha="0.1"
-          android:fillColor="#FF000000"
-          android:pathData="M129.19,96.37v258.57l96.38,96.38h225.75v-204.79L322.17,150.16h-53.78L129.19,96.37zM179.31,158.75l0.01,0.01l-0.01,0.01V158.75zM179.31,178.55l-0.01,-0.01l0.01,-0.01h0l0.01,0.01L179.31,178.55zM179.33,158.76l-0,0l0,-0V158.76z"
-          android:strokeAlpha="0.1" />
-
-      <path
           android:fillColor="#FFFFFF"
           android:pathData="M268.37,96.38l-139.2,0l0,258.57l192.98,0l0,-204.79z" />
 

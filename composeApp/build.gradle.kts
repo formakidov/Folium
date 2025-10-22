@@ -48,6 +48,7 @@ kotlin {
             implementation(libs.kstore.file)
             implementation(libs.multiplatform.paths)
             implementation(libs.koin.android)
+            implementation("androidx.core:core-splashscreen:1.0.1")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
