@@ -4,5 +4,16 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>folium</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.promni.folium.Folium</string>
+		</dict>
+	</array>
 </dict>
 </plist>
