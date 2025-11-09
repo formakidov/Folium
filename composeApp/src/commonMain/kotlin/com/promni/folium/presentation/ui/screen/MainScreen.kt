@@ -436,7 +436,7 @@ private fun Projects(
         Spacer(modifier = Modifier.height(16.dp))
 
         ProjectsCarousel(
-            items = projects,
+            items = projects.sortedByDescending { it.order },
             onItemClick = { onProjectClick(it.id) }
         )
 

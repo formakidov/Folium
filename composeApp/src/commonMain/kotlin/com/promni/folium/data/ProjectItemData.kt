@@ -6,6 +6,7 @@ import org.jetbrains.compose.resources.DrawableResource
 
 data class ProjectItemData(
     val id: String,
+    val order: Int,
     val title: String,
     val platforms: List<Platform>,
     val shortDescription: String,

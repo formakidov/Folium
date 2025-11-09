@@ -7,6 +7,7 @@ import portare_folium.composeapp.generated.resources.preview_project_mft
 val projects = listOf(
     ProjectItemData(
         id = "folium",
+        order = 7,
         title = "Portare Folium",
         platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop, Platform.Web),
         shortDescription = "Portfolio app",
@@ -17,18 +18,8 @@ val projects = listOf(
         fullDescription = AppStrings.PORTARE_FOLIUM_FULL_DESCRIPTION,
     ),
     ProjectItemData(
-        id = "mft",
-        title = "Muscle Fatigue Tracker",
-        platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop),
-        shortDescription = "Fitness app",
-        titleTextColor = null,
-        imageRes = Res.drawable.preview_project_mft,
-        role = AppStrings.OWNER_AND_DEVELOPER,
-        images = listOf(Res.drawable.preview_project_mft),
-        fullDescription = AppStrings.MFT_FULL_DESCRIPTION,
-    ),
-    ProjectItemData(
         id = "covi",
+        order = 6,
         title = "COVI",
         platforms = listOf(Platform.Android),
         shortDescription = "Insurance app",
@@ -39,7 +30,20 @@ val projects = listOf(
         fullDescription = AppStrings.COVI_FULL_DESCRIPTION,
     ),
     ProjectItemData(
+        id = "mft",
+        order = 5,
+        title = "Muscle Fatigue Tracker",
+        platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop),
+        shortDescription = "Fitness app",
+        titleTextColor = null,
+        imageRes = Res.drawable.preview_project_mft,
+        role = AppStrings.OWNER_AND_DEVELOPER,
+        images = listOf(Res.drawable.preview_project_mft),
+        fullDescription = AppStrings.MFT_FULL_DESCRIPTION,
+    ),
+    ProjectItemData(
         id = "tarot",
+        order = 4,
         title = "Aesthetic Tarot",
         platforms = listOf(Platform.Android),
         shortDescription = "Tarot app",
@@ -51,6 +55,7 @@ val projects = listOf(
     ),
     ProjectItemData(
         id = "bevrage",
+        order = 3,
         title = "bevRAGE",
         platforms = listOf(Platform.Android),
         shortDescription = "Cashback app",
@@ -62,6 +67,7 @@ val projects = listOf(
     ),
     ProjectItemData(
         id = "gymboom",
+        order = 2,
         title = "GymBoom",
         platforms = listOf(Platform.Android),
         shortDescription = "Fitness app",
@@ -73,6 +79,7 @@ val projects = listOf(
     ),
     ProjectItemData(
         id = "ipdigital",
+        order = 1,
         title = "IpDigital",
         platforms = listOf(Platform.Android),
         shortDescription = "Remote control app",
@@ -84,6 +91,7 @@ val projects = listOf(
     ),
     ProjectItemData(
         id = "litepdf",
+        order = 0,
         title = "Lite PDF Reader",
         platforms = listOf(Platform.Android),
         shortDescription = "PDF reader app",
