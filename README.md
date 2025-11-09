@@ -21,6 +21,7 @@ This project serves as a practical demonstration of modern KMP development, inco
 * **Dependency Injection:** Uses **Koin** for dependency injection across all shared source sets (common, android, jvm, etc.).
 * **Type-Safe Navigation:** Leverages **Jetpack/Compose Navigation** for screen transitions.
 * **Fast Development Cycle:** Integrates the **Compose Hot Reload** plugin for near-instant UI updates during development.
+* **Dynamic Project Descriptions:** Leverages the [Multiplatform-Markdown-Renderer](https://github.com/mikepenz/multiplatform-markdown-renderer) to parse and display detailed project information from local.
 
 ## Tech Stack & Libraries
 
@@ -34,6 +35,7 @@ This project uses a modern, multiplatform-first tech stack:
     * [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform)
     * [Compose Material 3](https://developer.android.com/jetpack/compose/design-systems/material3)
     * [Compose Material Icons Extended](https://developer.android.com/jetpack/compose/icons#icons-extended)
+    * [Multiplatform-Markdown-Renderer](https://github.com/mikepenz/multiplatform-markdown-renderer)
 * **Architecture & State (commonMain):**
     * [Jetpack/Compose ViewModel](https://developer.android.com/jetpack/androidx/releases/lifecycle)
     * [Jetpack Navigation for Compose](https://developer.android.com/jetpack/compose/navigation)

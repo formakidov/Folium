@@ -36,7 +36,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
-import com.promni.folium.localization.AppStrings
 import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
@@ -92,7 +91,7 @@ fun CarouselItem(
     val textColor = item.titleTextColor ?: MaterialTheme.colorScheme.onSurface
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = item.containerColor ?: MaterialTheme.colorScheme.surfaceContainerHighest),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
     ) {
         Column {
             Image(

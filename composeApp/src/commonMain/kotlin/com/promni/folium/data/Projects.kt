@@ -12,8 +12,9 @@ val projects = listOf(
         shortDescription = "Portfolio app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
-        role = AppStrings.OWNER_AND_DEVELOPER
+        role = AppStrings.OWNER_AND_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.PORTARE_FOLIUM_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "mft",
@@ -22,8 +23,9 @@ val projects = listOf(
         shortDescription = "Fitness app",
         titleTextColor = null,
         imageRes = Res.drawable.preview_project_mft,
-        containerColor = null,
         role = AppStrings.OWNER_AND_DEVELOPER,
+        images = listOf(Res.drawable.preview_project_mft),
+        fullDescription = AppStrings.MFT_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "covi",
@@ -32,8 +34,9 @@ val projects = listOf(
         shortDescription = "Insurance app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
         role = AppStrings.LEAD_SENIOR_ANDROID_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.COVI_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "tarot",
@@ -42,8 +45,9 @@ val projects = listOf(
         shortDescription = "Tarot app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
         role = AppStrings.OWNER_AND_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.TAROT_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "bevrage",
@@ -52,8 +56,9 @@ val projects = listOf(
         shortDescription = "Cashback app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
         role = AppStrings.MIDDLE_ANDROID_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.BEVRAGE_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "gymboom",
@@ -62,8 +67,9 @@ val projects = listOf(
         shortDescription = "Fitness app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
         role = AppStrings.MIDDLE_ANDROID_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.GYMBOOM_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "ipdigital",
@@ -72,8 +78,9 @@ val projects = listOf(
         shortDescription = "Remote control app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
         role = AppStrings.JUNIOR_ANDROID_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.IPDIGITAL_FULL_DESCRIPTION,
     ),
     ProjectItemData(
         id = "litepdf",
@@ -82,7 +89,8 @@ val projects = listOf(
         shortDescription = "PDF reader app",
         titleTextColor = null,
         imageRes = null,
-        containerColor = null,
         role = AppStrings.JUNIOR_ANDROID_DEVELOPER,
+        images = listOf(),
+        fullDescription = AppStrings.LITEPDF_FULL_DESCRIPTION,
     ),
 )

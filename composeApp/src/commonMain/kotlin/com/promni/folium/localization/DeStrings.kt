@@ -1,5 +1,14 @@
 package com.promni.folium.localization
 
+import com.promni.folium.localization.markdown.bevrageDeMarkdown
+import com.promni.folium.localization.markdown.coviDeMarkdown
+import com.promni.folium.localization.markdown.foliumDeMarkdown
+import com.promni.folium.localization.markdown.gymboomDeMarkdown
+import com.promni.folium.localization.markdown.ipdigitalDeMarkdown
+import com.promni.folium.localization.markdown.litepdfDeMarkdown
+import com.promni.folium.localization.markdown.mftDeMarkdown
+import com.promni.folium.localization.markdown.tarotDeMarkdown
+
 val deStrings = mapOf(
     AppStrings.APP_NAME to "Portare Folium",
     AppStrings.HEY_MY_NAME_IS to "Hallo, mein Name ist",
@@ -25,4 +34,13 @@ val deStrings = mapOf(
     AppStrings.JUNIOR_ANDROID_DEVELOPER to "Junior Android Entwickler",
     AppStrings.MIDDLE_ANDROID_DEVELOPER to "Middle Android Entwickler",
     AppStrings.LEAD_SENIOR_ANDROID_DEVELOPER to "Lead/Senior Android Entwickler",
+    AppStrings.PORTARE_FOLIUM_FULL_DESCRIPTION to foliumDeMarkdown,
+    AppStrings.MFT_FULL_DESCRIPTION to mftDeMarkdown,
+    AppStrings.COVI_FULL_DESCRIPTION to coviDeMarkdown,
+    AppStrings.TAROT_FULL_DESCRIPTION to tarotDeMarkdown,
+    AppStrings.BEVRAGE_FULL_DESCRIPTION to bevrageDeMarkdown,
+    AppStrings.GYMBOOM_FULL_DESCRIPTION to gymboomDeMarkdown,
+    AppStrings.IPDIGITAL_FULL_DESCRIPTION to ipdigitalDeMarkdown,
+    AppStrings.LITEPDF_FULL_DESCRIPTION to litepdfDeMarkdown,
+
 )

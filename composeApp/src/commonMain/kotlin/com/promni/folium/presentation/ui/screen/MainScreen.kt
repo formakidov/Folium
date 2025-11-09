@@ -37,7 +37,6 @@ import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults.rememberTooltipPositionProvider
 import androidx.compose.material3.rememberTooltipState
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,7 +53,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.promni.folium.data.model.Language
 import com.promni.folium.data.projects
@@ -63,7 +61,7 @@ import com.promni.folium.localization.ProvideLanguage
 import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.components.LanguagePicker
 import com.promni.folium.presentation.ui.components.ProjectsCarousel
-import com.promni.folium.presentation.ui.utils.getWindowSizeClass
+import com.promni.folium.presentation.ui.utils.getContentSidePadding
 import com.promni.folium.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
@@ -583,16 +581,4 @@ private fun SocialIconButton(
         contentDescription = contentDescription,
         tint = MaterialTheme.colorScheme.secondary
     )
-}
-
-@Composable
-private fun getContentSidePadding(): Dp {
-    val windowSizeClass = getWindowSizeClass()
-    val sidePadding = when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> 24.dp
-        WindowWidthSizeClass.Medium -> 48.dp
-        WindowWidthSizeClass.Expanded -> 96.dp
-        else -> 24.dp
-    }
-    return sidePadding
 }
