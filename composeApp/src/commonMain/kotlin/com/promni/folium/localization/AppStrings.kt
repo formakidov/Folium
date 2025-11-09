@@ -27,4 +27,13 @@ object AppStrings {
     const val LEAD_SENIOR_ANDROID_DEVELOPER = "lead_senior_android_developer"
     const val MIDDLE_ANDROID_DEVELOPER = "middle_android_developer"
     const val JUNIOR_ANDROID_DEVELOPER = "junior_android_developer"
+    const val PORTARE_FOLIUM_FULL_DESCRIPTION = "portare_folium_full_description"
+    const val MFT_FULL_DESCRIPTION = "mft_full_description"
+    const val COVI_FULL_DESCRIPTION = "covi_full_description"
+    const val TAROT_FULL_DESCRIPTION = "tarot_full_description"
+    const val BEVRAGE_FULL_DESCRIPTION = "bevrage_full_description"
+    const val GYMBOOM_FULL_DESCRIPTION = "gymboom_full_description"
+    const val IPDIGITAL_FULL_DESCRIPTION = "ipdigital_full_description"
+    const val LITEPDF_FULL_DESCRIPTION = "litepdf_full_description"
+
 }

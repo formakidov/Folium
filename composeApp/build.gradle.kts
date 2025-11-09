@@ -48,7 +48,7 @@ kotlin {
             implementation(libs.kstore.file)
             implementation(libs.multiplatform.paths)
             implementation(libs.koin.android)
-            implementation("androidx.core:core-splashscreen:1.0.1")
+            implementation(libs.androidx.core.splashscreen)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -66,6 +66,10 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.multiplatform.markdown.renderer)
+            implementation(libs.multiplatform.markdown.renderer.m3)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
