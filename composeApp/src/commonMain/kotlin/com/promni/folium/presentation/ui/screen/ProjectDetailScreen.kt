@@ -1,6 +1,5 @@
 package com.promni.folium.presentation.ui.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,9 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownTypography
 import com.mikepenz.markdown.model.rememberMarkdownState
@@ -54,8 +54,8 @@ import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getContentSidePadding
 import com.promni.folium.viewmodel.SettingsViewModel
-import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import portare_folium.composeapp.generated.resources.Res
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -224,8 +224,8 @@ private fun HorizontalImageCarousel(project: ProjectItemData) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(project.images) { image ->
-                Image(
-                    painter = painterResource(image),
+                AsyncImage(
+                    model = Res.getUri(image),
                     contentDescription = null,
                     modifier = Modifier.height(200.dp)
                 )

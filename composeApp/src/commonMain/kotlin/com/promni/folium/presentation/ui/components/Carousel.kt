@@ -2,7 +2,6 @@
 
 package com.promni.folium.presentation.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.promni.folium.data.Platform
 import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
@@ -41,7 +41,6 @@ import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import org.jetbrains.compose.resources.painterResource
 import portare_folium.composeapp.generated.resources.Res
-import portare_folium.composeapp.generated.resources.wip
 
 @Composable
 fun ProjectsCarousel(
@@ -93,8 +92,10 @@ fun CarouselItem(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
     ) {
         Column {
-            Image(
-                painter = painterResource(item.imageRes ?: Res.drawable.wip),
+
+
+            AsyncImage(
+                model = Res.getUri(item.previewImage ?: "drawable/wip.jpg"),
                 contentDescription = item.title,
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 contentScale = ContentScale.Crop

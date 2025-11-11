@@ -2,7 +2,6 @@ package com.promni.folium.data
 
 import androidx.compose.ui.graphics.Color
 import com.promni.folium.localization.AppStringsId
-import org.jetbrains.compose.resources.DrawableResource
 
 data class ProjectItemData(
     val id: String,
@@ -12,8 +11,8 @@ data class ProjectItemData(
     val shortDescription: AppStringsId? = null,
     val role: AppStringsId,
     val titleTextColor: Color? = null,
-    val imageRes: DrawableResource? = null,
-    val images: List<DrawableResource> = emptyList(),
+    val previewImage: String? = null,
+    val images: List<String> = emptyList(),
     val fullDescription: AppStringsId,
     val appLink: String? = null,
     val projectLink: String? = null,

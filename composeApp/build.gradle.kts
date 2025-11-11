@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.multiplatform.paths)
             implementation(libs.koin.android)
             implementation(libs.androidx.core.splashscreen)
+            implementation(libs.ktor.client.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -74,11 +75,17 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        appleMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
             implementation(libs.kstore.file)
             implementation(libs.multiplatform.paths)
+            implementation(libs.ktor.client.java)
         }
         iosMain.dependencies {
             implementation(libs.kstore.file)

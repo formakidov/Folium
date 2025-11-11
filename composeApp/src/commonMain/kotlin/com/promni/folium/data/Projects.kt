@@ -1,8 +1,6 @@
 package com.promni.folium.data
 
 import com.promni.folium.localization.AppStrings
-import portare_folium.composeapp.generated.resources.Res
-import portare_folium.composeapp.generated.resources.preview_project_mft
 
 val projects = listOf(
     ProjectItemData(
@@ -11,7 +9,7 @@ val projects = listOf(
         title = "Portare Folium",
         platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop, Platform.Web),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_folium.png",
         role = AppStrings.OWNER_AND_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.PORTARE_FOLIUM_FULL_DESCRIPTION,
@@ -25,7 +23,7 @@ val projects = listOf(
         title = "COVI",
         platforms = listOf(Platform.Android),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_covi.png",
         role = AppStrings.LEAD_SENIOR_ANDROID_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.COVI_FULL_DESCRIPTION,
@@ -40,9 +38,9 @@ val projects = listOf(
         title = "Muscle Fatigue Tracker",
         platforms = listOf(Platform.Android, Platform.Ios, Platform.Desktop),
         titleTextColor = null,
-        imageRes = Res.drawable.preview_project_mft,
+        previewImage = "drawable/preview_project_mft.png",
         role = AppStrings.OWNER_AND_DEVELOPER,
-        images = listOf(Res.drawable.preview_project_mft),
+        images = listOf(/*"drawable/preview_project_mft.png"*/),
         fullDescription = AppStrings.MFT_FULL_DESCRIPTION,
         sourceCodeLink = "https://github.com/formakidov/Muscle-Fatigue-Tracker",
         devPeriod = "10.2025",
@@ -53,7 +51,7 @@ val projects = listOf(
         title = "Aesthetic Tarot",
         platforms = listOf(Platform.Android),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_tarot.jpg",
         role = AppStrings.OWNER_AND_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.TAROT_FULL_DESCRIPTION,
@@ -66,7 +64,7 @@ val projects = listOf(
         title = "bevRAGE",
         platforms = listOf(Platform.Android),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_bevrage.png",
         role = AppStrings.MIDDLE_ANDROID_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.BEVRAGE_FULL_DESCRIPTION,
@@ -80,7 +78,7 @@ val projects = listOf(
         title = "GymBoom",
         platforms = listOf(Platform.Android),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_gymboom.png",
         role = AppStrings.MIDDLE_ANDROID_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.GYMBOOM_FULL_DESCRIPTION,
@@ -94,7 +92,7 @@ val projects = listOf(
         title = "Lite PDF Reader",
         platforms = listOf(Platform.Android),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_litepdf.png",
         role = AppStrings.JUNIOR_ANDROID_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.LITEPDF_FULL_DESCRIPTION,
@@ -108,7 +106,7 @@ val projects = listOf(
         title = "IpDigital",
         platforms = listOf(Platform.Android),
         titleTextColor = null,
-        imageRes = null,
+        previewImage = "drawable/preview_project_ipdigital.png",
         role = AppStrings.JUNIOR_ANDROID_DEVELOPER,
         images = listOf(),
         fullDescription = AppStrings.IPDIGITAL_FULL_DESCRIPTION,
