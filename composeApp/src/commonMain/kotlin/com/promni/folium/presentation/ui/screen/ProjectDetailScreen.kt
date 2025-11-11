@@ -211,7 +211,7 @@ private fun ProjectDetailRow(
             text = label,
             style = typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier.width(176.dp)
+            modifier = Modifier.width(190.dp)
         )
         content()
     }
