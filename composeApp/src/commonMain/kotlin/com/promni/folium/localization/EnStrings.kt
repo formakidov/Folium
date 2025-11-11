@@ -17,7 +17,13 @@ val enStrings = mapOf(
     AppStrings.PORTARE_FOLIUM to "Portare Folium",
     AppStrings.ETYMOLOGY_TOOLTIP to "From Latin 'portare' (to carry) and 'folium' (leaf/sheet), evolving to mean 'a collection of work'.",
     AppStrings.ETYMOLOGY to "Etymology",
-    AppStrings.SHORT_BIO to "I'm a Software Engineer who loves a good game of squash or table tennis, building useful (and colorful) mobile apps, and geeking out over HoMM3!",
+    AppStrings.SHORT_BIO to "I'm a Senior Software Engineer with a passion for building polished mobile applications.\n" +
+            "\n" +
+            "With %YEARS_OF_MOBILE_DEV% years in mobile development, my foundation is in native Android, and since 2023, I've also been building for iOS. These days, I'm focused on the future of cross-platform development, specifically mastering Kotlin Multiplatform (KMP) and learning Flutter.\n" +
+            "\n" +
+            "When I'm not coding, I'm learning German or enjoying my hobbies: squash, table tennis, origami, and the occasional HoMM3 marathon.\n" +
+            "\n" +
+            "Feel free to check out my projects below!",
     AppStrings.WHAT_IVE_BEEN_BUILDING to "// What I've been building",
     AppStrings.MY_GITHUB_PROFILE to "github.com/formakidov",
     AppStrings.MY_LINKEDIN_PROFILE to "linkedin.com/in/yauheni-farmakidau",
@@ -42,4 +48,16 @@ val enStrings = mapOf(
     AppStrings.GYMBOOM_FULL_DESCRIPTION to gymboomEnMarkdown,
     AppStrings.IPDIGITAL_FULL_DESCRIPTION to ipdigitalEnMarkdown,
     AppStrings.LITEPDF_FULL_DESCRIPTION to litepdfEnMarkdown,
+    AppStrings.DEV_PERIOD to "Dev period",
+    AppStrings.MY_ROLE to "My Role",
+    AppStrings.APP_LINK to "App Link",
+    AppStrings.PROJECT_LINK to "Project Link",
+    AppStrings.SOURCE_CODE to "Source Code",
+    AppStrings.NDA to "Under NDA",
+    AppStrings.COMPANY to "Company",
+    AppStrings.AXIOM_COMPANY to "Axiom Connected",
+    AppStrings.ITECHART_COMPANY to "ITechArt",
+    AppStrings.WEBMARTSOFT_COMPANY to "WebmartSoft",
+    AppStrings.EVENTLAB_COMPANY to "EventLab",
+
 )

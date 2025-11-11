@@ -73,6 +73,9 @@ import portare_folium.composeapp.generated.resources.email_to
 import portare_folium.composeapp.generated.resources.github_logo
 import portare_folium.composeapp.generated.resources.linkedin_logo
 import portare_folium.composeapp.generated.resources.photo
+import kotlin.time.Clock.System
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @Composable
 fun MainScreen(
@@ -296,7 +299,8 @@ private fun Title(modifier: Modifier = Modifier) {
         Text(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(end = 8.dp),
+                .padding(end = 8.dp)
+                .animateContentSize(),
             text = localizedString(AppStrings.HEY_MY_NAME_IS),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
@@ -361,6 +365,7 @@ private fun Subtitle(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalTime::class)
 @Composable
 private fun Bio(modifier: Modifier = Modifier) {
     Card(
@@ -369,9 +374,13 @@ private fun Bio(modifier: Modifier = Modifier) {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         shape = RoundedCornerShape(16.dp),
     ) {
+        val startDate = Instant.parse("2014-10-01T00:00:00Z")
+        val diffMillis = (System.now().epochSeconds - startDate.epochSeconds)
+        val years = (diffMillis / (365.25 * 24 * 60 * 60)).toInt().toString()
+
         Text(
             modifier = Modifier.padding(16.dp),
-            text = localizedString(AppStrings.SHORT_BIO),
+            text = localizedString(AppStrings.SHORT_BIO).replace("%YEARS_OF_MOBILE_DEV%", years),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary
         )

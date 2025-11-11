@@ -17,7 +17,13 @@ val deStrings = mapOf(
     AppStrings.PORTARE_FOLIUM to "Portare Folium",
     AppStrings.ETYMOLOGY_TOOLTIP to "Aus dem Lateinischen 'portare' (tragen) und 'folium' (Blatt/Bogen), was sich zu 'eine Sammlung von Arbeiten' entwickelte.",
     AppStrings.ETYMOLOGY to "Etymologie",
-    AppStrings.SHORT_BIO to "Ich bin ein Softwareentwickler, der gerne Squash oder Tischtennis spielt, nützliche (und farbenfrohe) mobile Apps entwickelt und sich für HoMM3 begeistert!",
+    AppStrings.SHORT_BIO to "Ich bin ein Senior Software Engineer mit einer Leidenschaft für die Entwicklung ausgefeilter mobiler Anwendungen.\n" +
+            "\n" +
+            "Mit %YEARS_OF_MOBILE_DEV% Jahren in der mobilen Entwicklung liegt mein Fundament im nativen Android, und seit 2023 entwickle ich auch für iOS. Zurzeit konzentriere ich mich auf die Zukunft der plattformübergreifenden Entwicklung, insbesondere auf die Beherrschung von Kotlin Multiplatform (KMP) und das Erlernen von Flutter.\n" +
+            "\n" +
+            "Wenn ich nicht gerade programmiere, lerne ich Deutsch oder genieße meine Hobbys: Squash, Tischtennis, Origami und den gelegentlichen HoMM3-Marathon.\n" +
+            "\n" +
+            "Schau dir gerne meine Projekte unten an!",
     AppStrings.WHAT_IVE_BEEN_BUILDING to "// Was ich gebaut habe",
     AppStrings.MY_GITHUB_PROFILE to "github.com/formakidov",
     AppStrings.MY_LINKEDIN_PROFILE to "linkedin.com/in/yauheni-farmakidau",
@@ -42,5 +48,15 @@ val deStrings = mapOf(
     AppStrings.GYMBOOM_FULL_DESCRIPTION to gymboomDeMarkdown,
     AppStrings.IPDIGITAL_FULL_DESCRIPTION to ipdigitalDeMarkdown,
     AppStrings.LITEPDF_FULL_DESCRIPTION to litepdfDeMarkdown,
-
+    AppStrings.DEV_PERIOD to "Entwicklungszeitraum",
+    AppStrings.MY_ROLE to "Meine Rolle",
+    AppStrings.APP_LINK to "Applink",
+    AppStrings.PROJECT_LINK to "Projektlink",
+    AppStrings.SOURCE_CODE to "Quellcode",
+    AppStrings.NDA to "Unter NDA",
+    AppStrings.COMPANY to "Unternehmen",
+    AppStrings.AXIOM_COMPANY to "Axiom Connected",
+    AppStrings.ITECHART_COMPANY to "ITechArt",
+    AppStrings.WEBMARTSOFT_COMPANY to "WebmartSoft",
+    AppStrings.EVENTLAB_COMPANY to "EventLab",
 )

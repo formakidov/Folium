@@ -2,8 +2,6 @@
 
 package com.promni.folium.presentation.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
@@ -34,6 +31,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.promni.folium.data.Platform
 import com.promni.folium.data.ProjectItemData
 import com.promni.folium.data.projects
 import com.promni.folium.localization.localizedString
@@ -42,7 +41,6 @@ import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import org.jetbrains.compose.resources.painterResource
 import portare_folium.composeapp.generated.resources.Res
-import portare_folium.composeapp.generated.resources.wip
 
 @Composable
 fun ProjectsCarousel(
@@ -94,8 +92,10 @@ fun CarouselItem(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHighest),
     ) {
         Column {
-            Image(
-                painter = painterResource(item.imageRes ?: Res.drawable.wip),
+
+
+            AsyncImage(
+                model = Res.getUri(item.previewImage ?: "drawable/wip.jpg"),
                 contentDescription = item.title,
                 modifier = Modifier.weight(1f).fillMaxSize(),
                 contentScale = ContentScale.Crop
@@ -108,48 +108,49 @@ fun CarouselItem(
                     style = MaterialTheme.typography.titleLarge,
                     color = textColor,
                 )
+
                 Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    modifier = Modifier
-                        .padding(start = 24.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.primaryContainer,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    text = localizedString(item.role),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+
+                RoleChip(
+                    modifier = Modifier.padding(start = 24.dp),
+                    role = localizedString(item.role)
                 )
-                Row(
-                    modifier = Modifier
-                        .horizontalScroll(rememberScrollState())
-                        .padding(start = 24.dp, end = 12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item.platforms.forEach { platform ->
-                        AssistChip(
-                            onClick = { },
-                            label = { Text(platform.displayName) },
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(platform.icon),
-                                    contentDescription = "${platform.displayName} icon",
-                                    modifier = Modifier.size(AssistChipDefaults.IconSize)
-                                )
-                            },
-                            colors = AssistChipDefaults.assistChipColors(
-                                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                labelColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                leadingIconContentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                            ),
-                        )
-                    }
-                }
+
+                Platforms(item.platforms)
             }
         }
     }
 }
+
+@Composable
+private fun Platforms(platforms: List<Platform>) {
+    Row(
+        modifier = Modifier
+            .horizontalScroll(rememberScrollState())
+            .padding(start = 24.dp, end = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        platforms.forEach { platform ->
+            AssistChip(
+                onClick = { },
+                label = { Text(platform.displayName) },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(platform.icon),
+                        contentDescription = "${platform.displayName} icon",
+                        modifier = Modifier.size(AssistChipDefaults.IconSize)
+                    )
+                },
+                colors = AssistChipDefaults.assistChipColors(
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    labelColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                    leadingIconContentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                ),
+            )
+        }
+    }
+}
+
 
 @Composable
 private fun ThemedCarouselPreview(
