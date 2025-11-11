@@ -42,5 +42,15 @@ val deStrings = mapOf(
     AppStrings.GYMBOOM_FULL_DESCRIPTION to gymboomDeMarkdown,
     AppStrings.IPDIGITAL_FULL_DESCRIPTION to ipdigitalDeMarkdown,
     AppStrings.LITEPDF_FULL_DESCRIPTION to litepdfDeMarkdown,
-
+    AppStrings.DEV_PERIOD to "Entwicklungszeitraum",
+    AppStrings.MY_ROLE to "Meine Rolle",
+    AppStrings.APP_LINK to "Applink",
+    AppStrings.PROJECT_LINK to "Projektlink",
+    AppStrings.SOURCE_CODE to "Quellcode",
+    AppStrings.NDA to "Unter NDA",
+    AppStrings.COMPANY to "Unternehmen",
+    AppStrings.AXIOM_COMPANY to "Axiom Connected",
+    AppStrings.ITECHART_COMPANY to "ITechArt",
+    AppStrings.WEBMARTSOFT_COMPANY to "WebmartSoft",
+    AppStrings.EVENTLAB_COMPANY to "EventLab",
 )

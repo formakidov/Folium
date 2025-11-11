@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -33,6 +35,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownTypography
@@ -42,6 +49,7 @@ import com.promni.folium.data.projects
 import com.promni.folium.localization.AppStrings
 import com.promni.folium.localization.ProvideLanguage
 import com.promni.folium.localization.localizedString
+import com.promni.folium.presentation.ui.components.RoleChip
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getContentSidePadding
@@ -101,8 +109,8 @@ private fun Content(
             .padding(bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-//        Overview(project)
-//        Spacer(modifier = Modifier.height(16.dp))
+        Overview(project)
+        Spacer(modifier = Modifier.height(16.dp))
         Markdown(
             modifier = Modifier.fillMaxSize(),
             markdownState = markdownState,
@@ -124,22 +132,88 @@ private fun Overview(project: ProjectItemData) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(
-            text = project.title,
-            style = typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = project.shortDescription,
-            style = typography.bodyLarge
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = localizedString(project.role),
-            style = typography.bodyMedium
-        )
+        ProjectDetailsTable(project)
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalImageCarousel(project)
+    }
+}
+
+@Composable
+private fun ProjectDetailsTable(project: ProjectItemData) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        ProjectDetailRow(label = localizedString(AppStrings.MY_ROLE)) {
+            RoleChip(role = localizedString(project.role))
+        }
+        if (project.company != null) {
+            ProjectDetailRow(label = localizedString(AppStrings.COMPANY)) {
+                DefaultDetailText(text = localizedString(project.company))
+            }
+        }
+        if (project.appLink != null) {
+            ProjectDetailRow(label = localizedString(AppStrings.APP_LINK)) {
+                LinkText(url = project.appLink)
+            }
+        }
+        if (project.projectLink != null) {
+            ProjectDetailRow(label = localizedString(AppStrings.PROJECT_LINK)) {
+                LinkText(url = project.projectLink)
+            }
+        }
+        ProjectDetailRow(label = localizedString(AppStrings.SOURCE_CODE)) {
+            if (project.sourceCodeLink != null) {
+                LinkText(url = project.sourceCodeLink)
+            } else {
+                Text(text = localizedString(AppStrings.NDA), style = typography.bodyMedium)
+            }
+        }
+        if (project.devPeriod != null) {
+            ProjectDetailRow(label = localizedString(AppStrings.DEV_PERIOD)) {
+                DefaultDetailText(text = project.devPeriod)
+            }
+        }
+    }
+}
+
+@Composable
+private fun DefaultDetailText(text: String) {
+    Text(
+        text = text,
+        style = typography.bodyMedium,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+    )
+}
+
+@Composable
+private fun LinkText(url: String) {
+    val annotatedString = buildAnnotatedString {
+        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+            pushLink(LinkAnnotation.Url(url))
+            append(url)
+            pop()
+        }
+    }
+    Text(
+        text = annotatedString,
+        style = typography.bodyMedium,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
+    )
+}
+
+@Composable
+private fun ProjectDetailRow(
+    label: String,
+    content: @Composable () -> Unit
+) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = label,
+            style = typography.titleMedium,
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.width(160.dp)
+        )
+        content()
     }
 }
 
@@ -153,7 +227,7 @@ private fun HorizontalImageCarousel(project: ProjectItemData) {
                 Image(
                     painter = painterResource(image),
                     contentDescription = null,
-                    modifier = Modifier.height(200.dp) 
+                    modifier = Modifier.height(200.dp)
                 )
             }
         }

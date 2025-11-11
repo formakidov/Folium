@@ -42,4 +42,16 @@ val enStrings = mapOf(
     AppStrings.GYMBOOM_FULL_DESCRIPTION to gymboomEnMarkdown,
     AppStrings.IPDIGITAL_FULL_DESCRIPTION to ipdigitalEnMarkdown,
     AppStrings.LITEPDF_FULL_DESCRIPTION to litepdfEnMarkdown,
+    AppStrings.DEV_PERIOD to "Dev period",
+    AppStrings.MY_ROLE to "My Role",
+    AppStrings.APP_LINK to "App Link",
+    AppStrings.PROJECT_LINK to "Project Link",
+    AppStrings.SOURCE_CODE to "Source Code",
+    AppStrings.NDA to "Under NDA",
+    AppStrings.COMPANY to "Company",
+    AppStrings.AXIOM_COMPANY to "Axiom Connected",
+    AppStrings.ITECHART_COMPANY to "ITechArt",
+    AppStrings.WEBMARTSOFT_COMPANY to "WebmartSoft",
+    AppStrings.EVENTLAB_COMPANY to "EventLab",
+
 )

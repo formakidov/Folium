@@ -35,5 +35,15 @@ object AppStrings {
     const val GYMBOOM_FULL_DESCRIPTION = "gymboom_full_description"
     const val IPDIGITAL_FULL_DESCRIPTION = "ipdigital_full_description"
     const val LITEPDF_FULL_DESCRIPTION = "litepdf_full_description"
-
+    const val DEV_PERIOD = "dev_period"
+    const val MY_ROLE = "my_role"
+    const val APP_LINK = "app_link"
+    const val PROJECT_LINK = "project_link"
+    const val SOURCE_CODE = "source_code"
+    const val NDA = "nda"
+    const val COMPANY = "company"
+    const val AXIOM_COMPANY = "axiom_company"
+    const val ITECHART_COMPANY = "itechart_company"
+    const val WEBMARTSOFT_COMPANY = "webmartsoft_company"
+    const val EVENTLAB_COMPANY = "eventlab_company"
 }

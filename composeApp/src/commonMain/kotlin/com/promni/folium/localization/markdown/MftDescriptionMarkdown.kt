@@ -1,7 +1,7 @@
 package com.promni.folium.localization.markdown
 
 const val mftEnMarkdown = """
-### Muscle Fatigue Tracker
+### **Muscle Fatigue Tracker**
 
 ###
 ### *Overview*
@@ -85,7 +85,7 @@ The project is integrated with **GitHub Actions** for automated testing and buil
 """
 
 const val mftDeMarkdown = """
-### Muskelermüdungs-Tracker
+### **Muskelermüdungs-Tracker**
 
 ###
 ### *Überblick*
