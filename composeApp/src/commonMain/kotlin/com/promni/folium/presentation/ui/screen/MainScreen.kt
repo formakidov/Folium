@@ -299,7 +299,8 @@ private fun Title(modifier: Modifier = Modifier) {
         Text(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(end = 8.dp),
+                .padding(end = 8.dp)
+                .animateContentSize(),
             text = localizedString(AppStrings.HEY_MY_NAME_IS),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface
