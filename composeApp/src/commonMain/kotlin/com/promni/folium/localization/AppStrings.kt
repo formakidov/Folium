@@ -46,4 +46,5 @@ object AppStrings {
     const val ITECHART_COMPANY = "itechart_company"
     const val WEBMARTSOFT_COMPANY = "webmartsoft_company"
     const val EVENTLAB_COMPANY = "eventlab_company"
+    const val SCREENSHOT_DESCRIPTION = "screenshot_description"
 }

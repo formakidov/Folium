@@ -52,11 +52,12 @@ val deStrings = mapOf(
     AppStrings.MY_ROLE to "Meine Rolle",
     AppStrings.APP_LINK to "Applink",
     AppStrings.PROJECT_LINK to "Projektlink",
-    AppStrings.SOURCE_CODE to "Quellcode",
+    AppStrings.SOURCE_CODE to "Source code",
     AppStrings.NDA to "Unter NDA",
     AppStrings.COMPANY to "Unternehmen",
     AppStrings.AXIOM_COMPANY to "Axiom Connected",
     AppStrings.ITECHART_COMPANY to "ITechArt",
     AppStrings.WEBMARTSOFT_COMPANY to "WebmartSoft",
     AppStrings.EVENTLAB_COMPANY to "EventLab",
+    AppStrings.SCREENSHOT_DESCRIPTION to "Bildschirmerstellung"
 )

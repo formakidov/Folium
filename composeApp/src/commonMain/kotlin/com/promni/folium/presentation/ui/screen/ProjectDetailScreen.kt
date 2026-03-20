@@ -1,5 +1,6 @@
 package com.promni.folium.presentation.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,11 +30,18 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -50,14 +58,16 @@ import com.promni.folium.localization.AppStrings
 import com.promni.folium.localization.ProvideLanguage
 import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.components.RoleChip
+import com.promni.folium.presentation.ui.components.ZoomableFullscreenImage
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getContentSidePadding
+import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import com.promni.folium.viewmodel.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import portare_folium.composeapp.generated.resources.Res
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ProjectDetailScreen(
     projectId: String?,
@@ -67,28 +77,52 @@ fun ProjectDetailScreen(
     val project = projects.find { it.id == projectId }
     val settings by settingsViewModel.settings.collectAsState()
 
+    var selectedFullscreenImage by remember { mutableStateOf<String?>(null) }
+
+    BackHandler(enabled = selectedFullscreenImage != null) {
+        selectedFullscreenImage = null
+    }
+
     ProvideLanguage(settings.language) {
-        Scaffold(
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = { Text(project?.title ?: localizedString(AppStrings.PROJECT_NOT_FOUND)) },
-                    navigationIcon = {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = localizedString(AppStrings.BACK)
-                            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Scaffold(
+                topBar = {
+                    CenterAlignedTopAppBar(
+                        title = { Text(project?.title ?: localizedString(AppStrings.PROJECT_NOT_FOUND)) },
+                        navigationIcon = {
+                            IconButton(onClick = onNavigateBack) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = localizedString(AppStrings.BACK)
+                                )
+                            }
+                        }
+                    )
+                }
+            ) { paddingValues ->
+                Surface(
+                    modifier = Modifier.padding(
+                        PaddingValues(
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = 0.dp
+                        )
+                    )
+                ) {
+                    if (project == null) {
+                        ProjectNotFound(modifier = Modifier)
+                    } else {
+                        Content(project) { clickedImagePath ->
+                            selectedFullscreenImage = clickedImagePath
                         }
                     }
-                )
-            }
-        ) {
-            Surface(modifier = Modifier.padding(PaddingValues(top = it.calculateTopPadding(), bottom = 0.dp))) {
-                if (project == null) {
-                    ProjectNotFound(modifier = Modifier)
-                } else {
-                    Content(project)
                 }
+            }
+
+            if (selectedFullscreenImage != null) {
+                ZoomableFullscreenImage(
+                    imagePath = selectedFullscreenImage!!,
+                    onDismiss = { selectedFullscreenImage = null }
+                )
             }
         }
     }
@@ -96,7 +130,8 @@ fun ProjectDetailScreen(
 
 @Composable
 private fun Content(
-    project: ProjectItemData
+    project: ProjectItemData,
+    onImageClick: (String) -> Unit
 ) {
     val sidePadding = getContentSidePadding()
     val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
@@ -109,7 +144,7 @@ private fun Content(
             .padding(bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Overview(project)
+        Overview(project, onImageClick = onImageClick)
         Spacer(modifier = Modifier.height(16.dp))
         Markdown(
             modifier = Modifier.fillMaxSize(),
@@ -127,14 +162,17 @@ private fun Content(
 }
 
 @Composable
-private fun Overview(project: ProjectItemData) {
+private fun Overview(
+    project: ProjectItemData,
+    onImageClick: (String) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
         ProjectDetailsTable(project)
         Spacer(modifier = Modifier.height(16.dp))
-        HorizontalImageCarousel(project)
+        HorizontalImageCarousel(project = project, onImageClick = onImageClick)
     }
 }
 
@@ -218,16 +256,41 @@ private fun ProjectDetailRow(
 }
 
 @Composable
-private fun HorizontalImageCarousel(project: ProjectItemData) {
+private fun HorizontalImageCarousel(
+    project: ProjectItemData,
+    onImageClick: (String) -> Unit
+) {
     if (project.images.isNotEmpty()) {
+        val windowSizeClass = getWindowSizeClass()
+
+        val itemWidth = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 160.dp
+            WindowWidthSizeClass.Medium -> 220.dp
+            WindowWidthSizeClass.Expanded -> 280.dp
+            else -> 160.dp
+        }
+
+        val itemHeight = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 320.dp
+            WindowWidthSizeClass.Medium -> 440.dp
+            WindowWidthSizeClass.Expanded -> 560.dp
+            else -> 320.dp
+        }
+
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(project.images) { image ->
                 AsyncImage(
                     model = Res.getUri(image),
                     contentDescription = null,
-                    modifier = Modifier.height(200.dp)
+                    contentScale = ContentScale.FillWidth,
+                    alignment = Alignment.TopCenter,
+                    modifier = Modifier
+                        .width(itemWidth)
+                        .height(itemHeight)
+                        .clickable { onImageClick(image) }
                 )
             }
         }
