@@ -30,6 +30,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,7 +38,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -58,11 +62,12 @@ import com.promni.folium.presentation.ui.components.ZoomableFullscreenImage
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getContentSidePadding
+import com.promni.folium.presentation.ui.utils.getWindowSizeClass
 import com.promni.folium.viewmodel.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import portare_folium.composeapp.generated.resources.Res
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ProjectDetailScreen(
     projectId: String?,
@@ -73,6 +78,10 @@ fun ProjectDetailScreen(
     val settings by settingsViewModel.settings.collectAsState()
 
     var selectedFullscreenImage by remember { mutableStateOf<String?>(null) }
+
+    BackHandler(enabled = selectedFullscreenImage != null) {
+        selectedFullscreenImage = null
+    }
 
     ProvideLanguage(settings.language) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -247,17 +256,40 @@ private fun ProjectDetailRow(
 }
 
 @Composable
-private fun HorizontalImageCarousel(project: ProjectItemData, onImageClick: (String) -> Unit) {
+private fun HorizontalImageCarousel(
+    project: ProjectItemData,
+    onImageClick: (String) -> Unit
+) {
     if (project.images.isNotEmpty()) {
+        val windowSizeClass = getWindowSizeClass()
+
+        val itemWidth = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 160.dp
+            WindowWidthSizeClass.Medium -> 220.dp
+            WindowWidthSizeClass.Expanded -> 280.dp
+            else -> 160.dp
+        }
+
+        val itemHeight = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 320.dp
+            WindowWidthSizeClass.Medium -> 440.dp
+            WindowWidthSizeClass.Expanded -> 560.dp
+            else -> 320.dp
+        }
+
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(project.images) { image ->
                 AsyncImage(
                     model = Res.getUri(image),
                     contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    alignment = Alignment.TopCenter,
                     modifier = Modifier
-                        .height(200.dp)
+                        .width(itemWidth)
+                        .height(itemHeight)
                         .clickable { onImageClick(image) }
                 )
             }
