@@ -59,4 +59,5 @@ val deStrings = mapOf(
     AppStrings.ITECHART_COMPANY to "ITechArt",
     AppStrings.WEBMARTSOFT_COMPANY to "WebmartSoft",
     AppStrings.EVENTLAB_COMPANY to "EventLab",
+    AppStrings.SCREENSHOT_DESCRIPTION to "Bildschirmerstellung"
 )

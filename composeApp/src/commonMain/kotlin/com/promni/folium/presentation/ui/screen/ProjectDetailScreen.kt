@@ -1,5 +1,6 @@
 package com.promni.folium.presentation.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.LinkAnnotation
@@ -50,6 +54,7 @@ import com.promni.folium.localization.AppStrings
 import com.promni.folium.localization.ProvideLanguage
 import com.promni.folium.localization.localizedString
 import com.promni.folium.presentation.ui.components.RoleChip
+import com.promni.folium.presentation.ui.components.ZoomableFullscreenImage
 import com.promni.folium.presentation.ui.theme.AppTheme
 import com.promni.folium.presentation.ui.utils.DevicePreviews
 import com.promni.folium.presentation.ui.utils.getContentSidePadding
@@ -67,28 +72,48 @@ fun ProjectDetailScreen(
     val project = projects.find { it.id == projectId }
     val settings by settingsViewModel.settings.collectAsState()
 
+    var selectedFullscreenImage by remember { mutableStateOf<String?>(null) }
+
     ProvideLanguage(settings.language) {
-        Scaffold(
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = { Text(project?.title ?: localizedString(AppStrings.PROJECT_NOT_FOUND)) },
-                    navigationIcon = {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = localizedString(AppStrings.BACK)
-                            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Scaffold(
+                topBar = {
+                    CenterAlignedTopAppBar(
+                        title = { Text(project?.title ?: localizedString(AppStrings.PROJECT_NOT_FOUND)) },
+                        navigationIcon = {
+                            IconButton(onClick = onNavigateBack) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = localizedString(AppStrings.BACK)
+                                )
+                            }
+                        }
+                    )
+                }
+            ) { paddingValues ->
+                Surface(
+                    modifier = Modifier.padding(
+                        PaddingValues(
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = 0.dp
+                        )
+                    )
+                ) {
+                    if (project == null) {
+                        ProjectNotFound(modifier = Modifier)
+                    } else {
+                        Content(project) { clickedImagePath ->
+                            selectedFullscreenImage = clickedImagePath
                         }
                     }
-                )
-            }
-        ) {
-            Surface(modifier = Modifier.padding(PaddingValues(top = it.calculateTopPadding(), bottom = 0.dp))) {
-                if (project == null) {
-                    ProjectNotFound(modifier = Modifier)
-                } else {
-                    Content(project)
                 }
+            }
+
+            if (selectedFullscreenImage != null) {
+                ZoomableFullscreenImage(
+                    imagePath = selectedFullscreenImage!!,
+                    onDismiss = { selectedFullscreenImage = null }
+                )
             }
         }
     }
@@ -96,7 +121,8 @@ fun ProjectDetailScreen(
 
 @Composable
 private fun Content(
-    project: ProjectItemData
+    project: ProjectItemData,
+    onImageClick: (String) -> Unit
 ) {
     val sidePadding = getContentSidePadding()
     val systemBarsPaddings = WindowInsets.systemBars.asPaddingValues()
@@ -109,7 +135,7 @@ private fun Content(
             .padding(bottom = systemBarsPaddings.calculateBottomPadding() + 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Overview(project)
+        Overview(project, onImageClick = onImageClick)
         Spacer(modifier = Modifier.height(16.dp))
         Markdown(
             modifier = Modifier.fillMaxSize(),
@@ -127,14 +153,17 @@ private fun Content(
 }
 
 @Composable
-private fun Overview(project: ProjectItemData) {
+private fun Overview(
+    project: ProjectItemData,
+    onImageClick: (String) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
         ProjectDetailsTable(project)
         Spacer(modifier = Modifier.height(16.dp))
-        HorizontalImageCarousel(project)
+        HorizontalImageCarousel(project = project, onImageClick = onImageClick)
     }
 }
 
@@ -218,7 +247,7 @@ private fun ProjectDetailRow(
 }
 
 @Composable
-private fun HorizontalImageCarousel(project: ProjectItemData) {
+private fun HorizontalImageCarousel(project: ProjectItemData, onImageClick: (String) -> Unit) {
     if (project.images.isNotEmpty()) {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -227,7 +256,9 @@ private fun HorizontalImageCarousel(project: ProjectItemData) {
                 AsyncImage(
                     model = Res.getUri(image),
                     contentDescription = null,
-                    modifier = Modifier.height(200.dp)
+                    modifier = Modifier
+                        .height(200.dp)
+                        .clickable { onImageClick(image) }
                 )
             }
         }
